@@ -7,13 +7,16 @@ class Button extends Sprite {
     private var label: String;
     public var text: FlxText;
     private var onClickCallback: Button->Void;
+    private var mouseOverCallback: Button->Void;
 
-    public function new(?callback: Button->Void, X: Float = 0, Y: Float = 0,
+    public function new(?callback: Button->Void, ?overCallback: Button-> Void,
+                        X: Float = 0, Y: Float = 0,
                         _background: String = "", _label: String = "",
                         color: Int = 0xffffff, size: Int = 30) {
         super(X, Y, _background);
 
         onClickCallback = callback;
+        mouseOverCallback = overCallback;
         label = _label;
         setAnchor(width / 2, height / 2);
 
@@ -60,6 +63,8 @@ class Button extends Sprite {
             if (overlapsPoint(FlxG.mouse)) {
                 onClickCallback(this);
             }
+        } else if (overlapsPoint(FlxG.mouse)) {
+            mouseOverCallback(this);
         }
         #end
 

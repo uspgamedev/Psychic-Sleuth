@@ -32,6 +32,9 @@ class PlayState extends State {
     private var dagger2: Button;
     private var hammer: Button;
 
+    // Clickable rooms.
+    private var rooms: FlxGroup;
+
 	override public function create(): Void {
         // Load sound
         deepExplosionSound = new FlxSound();
@@ -50,6 +53,8 @@ class PlayState extends State {
         // Place all itens on the scene
         createItens();
 
+        createRooms();
+
         // Done!!
 		super.create();
 	}
@@ -61,6 +66,22 @@ class PlayState extends State {
         add(dagger1);
         add(dagger2);
         add(hammer);
+    }
+
+    private function createRooms(): Void {
+        rooms = new FlxGroup();
+        rooms.add(new Button(roomCallback, overRoomCallback, 240, 270,
+                             "bright1.png"));
+        rooms.add(new Button(roomCallback, overRoomCallback, 430, 270, 
+                             "bright1.png"));
+        rooms.add(new Button(roomCallback, overRoomCallback, 575, 270,
+                             "bright3.png"));
+        rooms.add(new Button(roomCallback, overRoomCallback, 304, 383,
+                             "bright4.png"));
+        rooms.add(new Button(roomCallback, overRoomCallback, 543, 383,
+                             "bright5.png"));
+        add(rooms);
+        rooms.setAll("visible", false);
     }
 
     // Move an item to itemBar.
@@ -85,6 +106,14 @@ class PlayState extends State {
         } else {
             button.text.text = "   Ameba!";
         }
+    }
+
+    private function roomCallback(button: Button): Void {
+    }
+
+    private function overRoomCallback(button: Button): Void {
+        rooms.setAll("visible", false);
+        button.visible = true;
     }
 
     private function createExplosions(): Void {
