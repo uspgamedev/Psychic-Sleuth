@@ -129,6 +129,16 @@ class PlayState extends State {
         man = new Button(manCallback, 300, 100, "culprit.png");
         victim = new Button(victimCallback, 400, 100, "hipster-victim.png");
 
+        detective.setAnchor(detective.width / 2, detective.height);
+        woman.setAnchor(woman.width / 2, woman.height);
+        man.setAnchor(man.width / 2, man.height);
+        victim.setAnchor(victim.width / 2, victim.height);
+
+        detective.setPosition(200, 435);
+        woman.setPosition(180, 305);
+        man.setPosition(490, 305);
+        victim.setPosition(390, 305);
+
         add(detective);
         add(woman);
         add(man);
