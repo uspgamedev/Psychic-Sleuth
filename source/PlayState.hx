@@ -140,10 +140,10 @@ class PlayState extends State {
         man.setAnchor(man.width / 2, man.height);
         victim.setAnchor(victim.width / 2, victim.height);
 
-        detective.setPosition(200, 435);
-        woman.setPosition(180, 305);
-        man.setPosition(490, 305);
-        victim.setPosition(390, 305);
+        detective.setPosition(200, 440);
+        woman.setPosition(180, 310);
+        man.setPosition(490, 310);
+        victim.setPosition(390, 310);
 
         detective.animation.add("walking", [0, 1, 2, 3, 4, 5], 10, true);
         woman.animation.add("idle", [0, 1, 2, 3], 10, true);
@@ -200,29 +200,52 @@ class PlayState extends State {
         // Explanation: linearMotion(object, fromX, fromY, toX, toY,
         //                           durationOrSpeed, useAsDuration, options)
         FlxTween.linearMotion(button, button.getX(), button.getY(),
-                                      40 * itemBar.length, 32, 0.65, true,
-                                      options);
+                              40 * itemBar.length, 32, 0.65, true, options);
     }
 
     private function roomCallback(button: Button): Void {
         rooms.callAll("kill");
 
+        /*
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+            complete: cast fadeDetective,
+        };
+        // Explanation: linearMotion(object, fromX, fromY, toX, toY,
+        //                           durationOrSpeed, useAsDuration, options)
+        var toX = detectiveRoom.x + detectiveRoom.width - detective.width / 2;
+        var toY = detective.getY();
+        FlxTween.linearMotion(detective, detective.getX(), detective.getY(),
+                              toX, toY, 1.5, true, options);
+        */
+        fadeDetective();
+        detectiveRoom = button;
+    }
+
+    private function fadeDetective() {
         var options: TweenOptions;
         options = {
             type: FlxTween.ONESHOT,
             complete: cast moveDetective,
         };
-        // Explanation: linearMotion(object, fromX, fromY, toX, toY,
-        //                           durationOrSpeed, useAsDuration, options)
-        FlxTween.linearMotion(detective, detective.getX(), detective.getY(),
-                              detectiveRoom.getX() + detectiveRoom.width
-                              - detectiveRoom.width, detective.getY(),
-                              0.65, true, options);
-        detectiveRoom = button;
+        var toX = detectiveRoom.x + detectiveRoom.width - detective.width / 2;
+        FlxTween.multiVar(detective, { x: toX,
+                                       alpha: 0,
+                                     }, 1.5, options);
     }
 
     private function moveDetective(): Void {
-        detectiveRoom.setPosition(detectiveRoom.getX(), detectiveRoom.getY());
+        detective.setPosition(detectiveRoom.x,
+                              detectiveRoom.y + detectiveRoom.height - 8);
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+        };
+        var toX = detectiveRoom.x + detective.width / 2;
+        FlxTween.multiVar(detective, { x: toX,
+                                       alpha: 1,
+                                     }, 0.5, options);
     }
 
     private function overRoomCallback(button: Button): Void {
