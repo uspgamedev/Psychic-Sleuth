@@ -43,6 +43,7 @@ class PlayState extends State {
     private var woman: Button;
     private var man: Button;
     private var victim: Button;
+    private var detectiveRoom: Button; // Reference to the room where detective is.
 
 	override public function create(): Void {
         // Add background
@@ -114,8 +115,9 @@ class PlayState extends State {
                              "bright1.png"));
         rooms.add(new Button(roomCallback, overRoomCallback, 575, 270,
                              "bright3.png"));
-        rooms.add(new Button(roomCallback, overRoomCallback, 304, 383,
-                             "bright4.png"));
+        detectiveRoom = new Button(roomCallback, overRoomCallback, 304, 383,
+                             "bright4.png");
+        rooms.add(detectiveRoom);
         rooms.add(new Button(roomCallback, overRoomCallback, 543, 383,
                              "bright5.png"));
         add(rooms);
@@ -177,19 +179,36 @@ class PlayState extends State {
     private function moveToBar(button: Button): Void {
         itemBar.push(button);
 
-        var options: TweenOptions;                                              
-        options = {                                                             
-            type: FlxTween.ONESHOT,                                             
-        };                                                                      
-        // Explanation: linearMotion(object, fromX, fromY, toX, toY,            
-        //                           durationOrSpeed, useAsDuration, options)   
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+        };
+        // Explanation: linearMotion(object, fromX, fromY, toX, toY,
+        //                           durationOrSpeed, useAsDuration, options)
         FlxTween.linearMotion(button, button.getX(), button.getY(),
                                       40 * itemBar.length, 32, 0.65, true,
-                                      options); 
+                                      options);
     }
 
     private function roomCallback(button: Button): Void {
         rooms.callAll("kill");
+
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+            complete: cast moveDetective,
+        };
+        // Explanation: linearMotion(object, fromX, fromY, toX, toY,
+        //                           durationOrSpeed, useAsDuration, options)
+        FlxTween.linearMotion(detective, detective.getX(), detective.getY(),
+                              detectiveRoom.getX() + detectiveRoom.width
+                              - detectiveRoom.width, detective.getY(),
+                              0.65, true, options);
+        detectiveRoom = button;
+    }
+
+    private function moveDetective(): Void {
+        detectiveRoom.setPosition(detectiveRoom.getX(), detectiveRoom.getY());
     }
 
     private function overRoomCallback(button: Button): Void {
