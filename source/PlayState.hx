@@ -22,7 +22,10 @@ class PlayState extends State {
     private var leftText: FlxText;
     private var rightText: FlxText;
     private var deepExplosionSound: FlxSound;
+
+    // HUD
     private var itemBar: Array<Button>;
+    private var dialogBox: Button;
 
     // Clickable itens:
     private var dagger1: Button;
@@ -75,6 +78,15 @@ class PlayState extends State {
                                       options); 
     }
 
+    // When a dialog box is clicked, it does...
+    private function dialogCallback(button: Button): Void {
+        if (button.text.text == "   Ameba!") {
+            button.kill();
+        } else {
+            button.text.text = "   Ameba!";
+        }
+    }
+
     private function createExplosions(): Void {
         explosions = new FlxGroup();
         for (i in 0...30) {
@@ -87,7 +99,6 @@ class PlayState extends State {
 
     private function createHUD(): Void {
         itemBar = new Array<Button>();
-        //add(itemBar);
 
         leftText = new FlxText(10, 10, 200, "Explosions: " +
                                explosions.countLiving(), 20);
@@ -96,6 +107,14 @@ class PlayState extends State {
         rightText = new FlxText(FlxG.width - 180, 10, 170, "=)", 20);
         rightText.alignment = "right";
         add(rightText);
+
+        dialogBox = new Button(dialogCallback, 400, 523, "dialogBox.png",
+                               "   Long long text. =)\n" +
+                               "   Second line.",
+                               0xffffff, 20);
+        dialogBox.kill();
+        add(dialogBox);
+        add(dialogBox.text);
     }
 
 	override public function destroy(): Void {
@@ -114,6 +133,11 @@ class PlayState extends State {
         #if !mobile
         if (FlxG.mouse.justReleased) {
             createExplosionAt(FlxG.mouse.x, FlxG.mouse.y);
+        }
+
+        if (FlxG.keyboard.justReleased("SPACE")) {
+            //create dialog box.
+            dialogBox.revive();
         }
         #end
 
