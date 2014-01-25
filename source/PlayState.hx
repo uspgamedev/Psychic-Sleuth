@@ -25,7 +25,8 @@ class PlayState extends State {
     private var itemBar: Array<Button>;
 
     // Clickable itens:
-    private var dagger: Button;
+    private var dagger1: Button;
+    private var dagger2: Button;
 
 	override public function create(): Void {
         // Load sound
@@ -50,8 +51,10 @@ class PlayState extends State {
 	}
 
     private function createItens(): Void {
-        dagger = new Button(moveToBar, 200, 200, "dagger.png");
-        add(dagger);
+        dagger1 = new Button(moveToBar, 200, 200, "dagger.png");
+        dagger2 = new Button(moveToBar, 300, 300, "dagger.png");
+        add(dagger1);
+        add(dagger2);
     }
 
     // Move an item to itemBar.
@@ -65,7 +68,8 @@ class PlayState extends State {
         // Explanation: linearMotion(object, fromX, fromY, toX, toY,            
         //                           durationOrSpeed, useAsDuration, options)   
         FlxTween.linearMotion(button, button.getX(), button.getY(),
-                                      24, 24, 1, true, options); 
+                                      -16 + 48 * itemBar.length, 24, 0.8, true,
+                                      options); 
     }
 
     private function createExplosions(): Void {
