@@ -205,7 +205,7 @@ class PlayState extends State {
         // Explanation: linearMotion(object, fromX, fromY, toX, toY,
         //                           durationOrSpeed, useAsDuration, options)
         FlxTween.linearMotion(button, button.getX(), button.getY(),
-                              40 * itemBar.length, 32, 0.65, true, options);
+                              140 + 40 * itemBar.length, 32, 0.65, true, options);
     }
 
     private function roomCallback(button: Button): Void {
@@ -276,6 +276,8 @@ class PlayState extends State {
     }
 
     private function createHUD(): Void {
+        add(new FlxText(32, 16, 180, "Evidences: ", 20));
+        add(new FlxText(600, 16, 180, "Actions: ", 20));
         itemBar = new Array<Button>();
 
         dialogBox = new Button(dialogCallback, 400, 523, "dialogBox.png",
