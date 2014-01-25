@@ -7,8 +7,8 @@ class GameClass extends FlxGame {
         var stageWidth: Int = Lib.current.stage.stageWidth;
         var stageHeight: Int = Lib.current.stage.stageHeight;
 
-        var canvasWidth: Int = 960;
-        var canvasHeight: Int = 640;
+        var canvasWidth: Int = 800;
+        var canvasHeight: Int = 600;
 
         var ratioX: Float = stageWidth / canvasWidth;
         var ratioY: Float = stageHeight / canvasHeight;

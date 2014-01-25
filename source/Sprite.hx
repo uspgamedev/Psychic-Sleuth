@@ -12,11 +12,13 @@ class Sprite extends FlxSprite {
         super(X, Y);
 
         var imagesPath: String = "assets/images/high_res/";
+        /*
         if (FlxG.width < 900) {
             imagesPath = "assets/images/low_res/";
             frameWidth = Math.floor(frameWidth / 2);
             frameHeight = Math.floor(frameHeight / 2);
         }
+        */
 
         //loadGraphic(image, animated, reversible, width, height)
         loadGraphic(imagesPath + image, animated, reversible, frameWidth,
