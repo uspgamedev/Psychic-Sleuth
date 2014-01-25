@@ -12,8 +12,10 @@ class Button extends Sprite {
     public function new(?callback: Button->Void, ?overCallback: Button-> Void,
                         X: Float = 0, Y: Float = 0,
                         _background: String = "", _label: String = "",
-                        color: Int = 0xffffff, size: Int = 30) {
-        super(X, Y, _background);
+                        color: Int = 0xffffff, size: Int = 30,
+                        animated: Bool = false, reversible: Bool = false,
+                        frameWidth: Int = 0, frameHeight: Int = 0) {
+        super(X, Y, _background, animated, reversible, frameWidth, frameHeight);
 
         onClickCallback = callback;
         mouseOverCallback = overCallback;

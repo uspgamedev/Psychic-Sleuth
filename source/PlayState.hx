@@ -126,10 +126,14 @@ class PlayState extends State {
     }
 
     private function createCharacters(): Void {
-        detective = new Button(detectiveCallback, 100, 100, "detective.png");
-        woman = new Button(womanCallback, 200, 100, "woman.png");
-        man = new Button(manCallback, 300, 100, "culprit.png");
-        victim = new Button(victimCallback, 400, 100, "hipster-victim.png");
+        detective = new Button(detectiveCallback, 100, 100, "detective.png",
+                               "", 0xffffff, 30, true, true, 32, 64);
+        woman = new Button(womanCallback, 200, 100, "woman.png",
+                           "", 0xffffff, 30, true, true, 32, 64);
+        man = new Button(manCallback, 300, 100, "culprit.png",
+                         "", 0xffffff, 30, true, true, 32, 64);
+        victim = new Button(victimCallback, 400, 100, "hipster-victim.png",
+                            "", 0xffffff, 30, true, true, 32, 64);
 
         detective.setAnchor(detective.width / 2, detective.height);
         woman.setAnchor(woman.width / 2, woman.height);
@@ -140,6 +144,16 @@ class PlayState extends State {
         woman.setPosition(180, 305);
         man.setPosition(490, 305);
         victim.setPosition(390, 305);
+
+        detective.animation.add("walking", [0, 1, 2, 3, 4, 5], 10, true);
+        woman.animation.add("idle", [0, 1, 2, 3], 10, true);
+        man.animation.add("idle", [0, 1, 2, 3, 4, 5], 10, true);
+        victim.animation.add("idle", [0, 1, 2, 3, 4], 10, true);
+
+        detective.animation.play("walking");
+        woman.animation.play("idle");
+        man.animation.play("idle");
+        victim.animation.play("idle");
 
         add(detective);
         add(woman);
