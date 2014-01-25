@@ -65,7 +65,7 @@ class Button extends Sprite {
             if (overlapsPoint(FlxG.mouse)) {
                 onClickCallback(this);
             }
-        } else if (overlapsPoint(FlxG.mouse)) {
+        } else if (mouseOverCallback != null && overlapsPoint(FlxG.mouse)) {
             mouseOverCallback(this);
         }
         #end
