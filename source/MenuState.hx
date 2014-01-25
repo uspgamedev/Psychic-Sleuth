@@ -14,27 +14,20 @@ import flixel.util.FlxRandom;
 class MenuState extends State {
     private var buttonPlay: Button;
     private var buttonExit: Button;
+    private var background: Sprite;
 
 	override public function create(): Void {
         Lib.trace("MenuState: update: create");
 		FlxG.cameras.bgColor = 0xff131c1b;
 
-        #if mobile
-        var str: String = "Tap to start the game.";
-        #else
-        var str: String = "Press SPACE to start the game.";
-        #end
+        background = new Sprite(0, 0, "titlescreen.png");
+        add(background);
 
-        str += "\nW: " + Lib.current.stage.stageWidth +
-               " H: " + Lib.current.stage.stageHeight;
-        var text: FlxText = new FlxText(20, 20, 600, str);
-        text.color = 0xFFFFFF;
-        text.size = 30;
-        add(text);
-        Lib.trace("MenuState: update: text added");
+        buttonPlay = new Button(playCallback, 400, 350, "button.png", " Play",
+                                0x000000);
+        buttonExit = new Button(exitCallback, 400, 430, "button.png", " Exit",
+                                0x000000);
 
-        buttonPlay = new Button(playCallback, 300, 150, "button.png", " Play");
-        buttonExit = new Button(exitCallback, 300, 300, "button.png", " Exit");
         add(buttonPlay);
         add(buttonPlay.text);
         add(buttonExit);

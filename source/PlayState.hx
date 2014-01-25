@@ -19,7 +19,7 @@ import flixel.tweens.FlxTween.TweenOptions;
 
 class PlayState extends State {
     private var textTimer: FlxTimer;
-    private var background: FlxSprite;
+    private var background: Sprite;
     private var leftText: FlxText;
     private var rightText: FlxText;
 
