@@ -26,6 +26,7 @@ class PreLoader extends State {
             "background.png",
             "button.png",
             "explosion.png",
+            "dagger.png",
         ];
         soundAssets = [
             "underwater_explosion.ogg",

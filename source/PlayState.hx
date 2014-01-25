@@ -12,12 +12,20 @@ import flixel.util.FlxArrayUtil;
 import flixel.group.FlxGroup;
 import flixel.system.FlxSound;
 
+import flixel.tweens.FlxTween;                                                  
+import flixel.tweens.motion.LinearMotion;                                       
+import flixel.tweens.FlxTween.TweenOptions;
+
 class PlayState extends State {
     private var background: FlxSprite;
     private var explosions: FlxGroup;
     private var leftText: FlxText;
     private var rightText: FlxText;
     private var deepExplosionSound: FlxSound;
+    private var itemBar: Array<Button>;
+
+    // Clickable itens:
+    private var dagger: Button;
 
 	override public function create(): Void {
         // Load sound
@@ -34,9 +42,31 @@ class PlayState extends State {
         // Setup the HUD
         createHUD();
 
+        // Place all itens on the scene
+        createItens();
+
         // Done!!
 		super.create();
 	}
+
+    private function createItens(): Void {
+        dagger = new Button(moveToBar, 200, 200, "dagger.png");
+        add(dagger);
+    }
+
+    // Move an item to itemBar.
+    private function moveToBar(button: Button): Void {
+        itemBar.push(button);
+
+        var options: TweenOptions;                                              
+        options = {                                                             
+            type: FlxTween.ONESHOT,                                             
+        };                                                                      
+        // Explanation: linearMotion(object, fromX, fromY, toX, toY,            
+        //                           durationOrSpeed, useAsDuration, options)   
+        FlxTween.linearMotion(button, button.getX(), button.getY(),
+                                      24, 24, 1, true, options); 
+    }
 
     private function createExplosions(): Void {
         explosions = new FlxGroup();
@@ -49,6 +79,9 @@ class PlayState extends State {
     }
 
     private function createHUD(): Void {
+        itemBar = new Array<Button>();
+        //add(itemBar);
+
         leftText = new FlxText(10, 10, 200, "Explosions: " +
                                explosions.countLiving(), 20);
         add(leftText);
@@ -90,7 +123,7 @@ class PlayState extends State {
      */
     private function createExplosionAt(x: Float, y: Float): Explosion {
         if (explosions.countDead() > 0) {
-            var explosion: Explosion = cast explosions.getFirstDead();
+            var explosion: Explosion = cast(explosions.getFirstDead(), Explosion);
             explosion.setPosition(x, y);
             explosion.revive();
             return explosion;
