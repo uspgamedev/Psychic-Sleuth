@@ -1,3 +1,4 @@
+import flash.Lib;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
 
@@ -26,6 +27,7 @@ class PlayState extends State {
     // HUD
     private var itemBar: Array<Button>;
     private var dialogBox: Button;
+    private var flashback: Button;
 
     // Clickable itens:
     private var dagger1: Button;
@@ -82,6 +84,7 @@ class PlayState extends State {
                              "bright5.png"));
         add(rooms);
         rooms.setAll("visible", false);
+        rooms.callAll("kill");
     }
 
     // Move an item to itemBar.
@@ -109,10 +112,15 @@ class PlayState extends State {
     }
 
     private function roomCallback(button: Button): Void {
+        rooms.callAll("kill");
     }
 
     private function overRoomCallback(button: Button): Void {
         button.visible = true;
+    }
+
+    private function flashbackCallback(button: Button): Void {
+        rooms.callAll("revive");
     }
 
     private function createExplosions(): Void {
@@ -132,7 +140,7 @@ class PlayState extends State {
                                explosions.countLiving(), 20);
         add(leftText);
 
-        rightText = new FlxText(FlxG.width - 180, 10, 170, "=)", 20);
+        rightText = new FlxText(FlxG.width - 280, 10, 170, "=)", 20);
         rightText.alignment = "right";
         add(rightText);
 
@@ -143,6 +151,10 @@ class PlayState extends State {
         dialogBox.kill();
         add(dialogBox);
         add(dialogBox.text);
+
+        flashback = new Button(flashbackCallback, FlxG.width - 40, 32,
+                               "flashback.png");
+        add(flashback);
     }
 
 	override public function destroy(): Void {

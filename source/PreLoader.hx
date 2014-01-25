@@ -33,6 +33,7 @@ class PreLoader extends State {
             "bright3.png",
             "bright4.png",
             "bright5.png",
+            "flashback.png",
         ];
         soundAssets = [
             "underwater_explosion.ogg",
