@@ -3,62 +3,43 @@ import flixel.util.FlxPoint;
 import flixel.text.FlxText;
 import flixel.group.FlxGroup;
 
-class Button extends FlxGroup {
+class Button extends Sprite {
     private var label: String;
-    private var text: FlxText;
-    private var background: Sprite;
-    private var onClickCallback: Void->Void;
+    public var text: FlxText;
+    private var onClickCallback: Button->Void;
 
-    public function new(?callback: Void->Void, X: Float = 0, Y: Float = 0,
+    public function new(?callback: Button->Void, X: Float = 0, Y: Float = 0,
                         _background: String = "", _label: String = "",
                         color: Int = 0xffffff, size: Int = 30) {
-        super();
+        super(X, Y, _background);
 
         onClickCallback = callback;
         label = _label;
-        background = new Sprite(X, Y, _background);
-        background.setAnchor(background.width / 2, background.height / 2);
+        setAnchor(width / 2, height / 2);
 
-        text = new FlxText(X, Y, cast(background.width, Int), label, size);
+        text = new FlxText(X, Y, cast(width, Int), label, size);
         text.color = color;
-        text.x -= background.getAnchor().x;
+        text.x -= getAnchor().x;
         text.y -= text.height / 2 ;
         text.alignment = "center";
-
-        add(background);
-        add(text);
     }
 
-    public function overlapsPoint(point: FlxPoint): Bool {
-        return background.overlapsPoint(point);
+    override public function setPosition(X: Float = 0, Y: Float = 0): Void {
+        super.setPosition(X, Y);
+        if (text != null) {
+            text.x = X;
+            text.y = Y;
+        }
     }
 
-    public function setPosition(X: Float = 0, Y: Float = 0): Void {
+    override public function setX(X: Float): Float {
         text.x = X;
+        return super.setX(X);
+    }
+
+    override public function setY(Y: Float): Float {
         text.y = Y;
-        background.setPosition(X, Y);
-    }
-
-    public function getPosition(): FlxPoint {
-        return background.getPosition();
-    }
-
-    public function setX(X: Float): Float {
-        text.x = X;
-        return background.setX(X);
-    }
-
-    public function getX(): Float {
-        return background.getX();
-    }
-
-    public function setY(Y: Float): Float {
-        text.y = Y;
-        return background.setY(Y);
-    }
-
-    public function getY(): Float {
-        return background.getY();
+        return super.setY(Y);
     }
 
     override public function update(): Void {
@@ -67,7 +48,7 @@ class Button extends FlxGroup {
         #if !mobile
         if (FlxG.mouse.justReleased) {
             if (overlapsPoint(FlxG.mouse)) {
-                onClickCallback();
+                onClickCallback(this);
             }
         }
         #end
@@ -76,7 +57,7 @@ class Button extends FlxGroup {
         for (touch in FlxG.touches.list) {
             if (touch.justPressed) {
                 if (overlapsPoint(touch)) {
-                    onClickCallback();
+                    onClickCallback(this);
                 }
             }
         }
