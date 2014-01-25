@@ -42,6 +42,16 @@ class Button extends Sprite {
         return super.setY(Y);
     }
 
+    override public function kill(): Void {
+        super.kill();
+        text.kill();
+    }
+
+    override public function revive(): Void {
+        super.revive();
+        text.revive();
+    }
+
     override public function update(): Void {
         super.update();
 
