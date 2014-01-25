@@ -112,7 +112,6 @@ class PlayState extends State {
     }
 
     private function overRoomCallback(button: Button): Void {
-        rooms.setAll("visible", false);
         button.visible = true;
     }
 
@@ -173,6 +172,7 @@ class PlayState extends State {
         // HUD
         leftText.text = "Explosions: " + explosions.countLiving();
         rightText.text = "=)";
+        rooms.setAll("visible", false);
 
 		super.update();
 	}
