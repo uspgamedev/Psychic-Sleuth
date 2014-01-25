@@ -38,18 +38,22 @@ class PlayState extends State {
     // Clickable rooms.
     private var rooms: FlxGroup;
 
+    // Characteres.
+    private var detective: Button;
+    private var woman: Button;
+    private var man: Button;
+    private var victim: Button;
+
 	override public function create(): Void {
         // Add background
         background = new Sprite(0, 0, "background.png");
         add(background);
 
-        createRooms();
         createDialogs();
-
-        // Setup the HUD
         createHUD();
 
-        // Place all itens on the scene
+        createRooms();
+        createCharacters();
         createItens();
 
         textTimer = FlxTimer.start(0.75, raiseDialog);
@@ -62,11 +66,19 @@ class PlayState extends State {
         dialogs = new Array<String>();
 
         dialogs.push("   This is the crime scene.\n" +
-                     "   You are the detective. But not a regular one.");
+                     "   You are the detective. But not a regular one."); // 0
         dialogs.push("   While in a crime scene, you have the power so see" +
-                     "\n   what happend..." );
-        dialogs.push("   ... as you were the criminal.");
-        dialogs.push("");
+                     "\n   what happend..." ); // 1
+        dialogs.push("   ... as you were the criminal."); // 2
+        dialogs.push(""); // 3
+        dialogs.push("   Hum... What a mystery."); // 4
+        dialogs.push(""); // 5
+        dialogs.push("   (crying) I can't belive what happened."); // 6
+        dialogs.push(""); // 7
+        dialogs.push("   You are not thinking I've done that, are you?"); // 8
+        dialogs.push(""); // 9
+        dialogs.push("   Bleh... I'm DEAD!!!"); // 10
+        dialogs.push(""); // 11
     }
 
     private function raiseDialog(timer: FlxTimer): Void {
@@ -109,6 +121,46 @@ class PlayState extends State {
         add(rooms);
         rooms.setAll("visible", false);
         rooms.callAll("kill");
+    }
+
+    private function createCharacters(): Void {
+        detective = new Button(detectiveCallback, 100, 100, "detective.png");
+        woman = new Button(womanCallback, 200, 100, "woman.png");
+        man = new Button(manCallback, 300, 100, "culprit.png");
+        victim = new Button(victimCallback, 400, 100, "hipster-victim.png");
+
+        add(detective);
+        add(woman);
+        add(man);
+        add(victim);
+    }
+
+    private function detectiveCallback(button: Button): Void {
+        if (!dialogBox.alive) {
+            dialogIndex = 4;
+            raiseDialog(textTimer);
+        }
+    }
+
+    private function womanCallback(button: Button): Void {
+        if (!dialogBox.alive) {
+            dialogIndex = 6;
+            raiseDialog(textTimer);
+        }
+    }
+
+    private function manCallback(button: Button): Void {
+        if (!dialogBox.alive) {
+            dialogIndex = 8;
+            raiseDialog(textTimer);
+        }
+    }
+
+    private function victimCallback(button: Button): Void {
+        if (!dialogBox.alive) {
+            dialogIndex = 10;
+            raiseDialog(textTimer);
+        }
     }
 
     // Move an item to itemBar.
