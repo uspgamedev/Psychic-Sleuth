@@ -68,7 +68,7 @@ class PlayState extends State {
         // Explanation: linearMotion(object, fromX, fromY, toX, toY,            
         //                           durationOrSpeed, useAsDuration, options)   
         FlxTween.linearMotion(button, button.getX(), button.getY(),
-                                      -16 + 48 * itemBar.length, 24, 0.8, true,
+                                      40 * itemBar.length, 32, 0.8, true,
                                       options); 
     }
 
