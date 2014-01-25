@@ -38,6 +38,7 @@ class PreLoader extends State {
             "culprit.png",
             "woman.png",
             "hipster-victim.png",
+            "move.png",
         ];
         soundAssets = [
             "underwater_explosion.ogg",

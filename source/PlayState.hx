@@ -24,6 +24,7 @@ class PlayState extends State {
     // HUD
     private var itemBar: Array<Button>;
     private var flashback: Button;
+    private var move: Button;
     private var dialogBox: Button;
     private var dialogs: Array<String>;
     private var dialogIndex: Int;
@@ -79,6 +80,8 @@ class PlayState extends State {
         dialogs.push(""); // 9
         dialogs.push("   Bleh... I'm DEAD!!!"); // 10
         dialogs.push(""); // 11
+        dialogs.push("   Click on the romm where you wish to go."); //12
+        dialogs.push(""); //13
     }
 
     private function raiseDialog(timer: FlxTimer): Void {
@@ -90,10 +93,10 @@ class PlayState extends State {
     private function dialogCallback(button: Button): Void {
         dialogIndex++;
         if (dialogs[dialogIndex] == "") {
-            button.kill();
+            dialogBox.kill();
             dialogIndex++;
         } else {
-            button.text.text = dialogs[dialogIndex];
+            dialogBox.text.text = dialogs[dialogIndex];
         }
     }
 
@@ -143,6 +146,7 @@ class PlayState extends State {
         woman.setPosition(180, 310);
         man.setPosition(490, 310);
         victim.setPosition(390, 316);
+        man.facing = FlxObject.LEFT;
 
         detective.animation.add("idle", [0, 1, 2, 3, 4, 5], 10, true);
         detective.animation.add("walking", [6, 7, 8, 9, 10, 11], 10, true);
@@ -207,19 +211,6 @@ class PlayState extends State {
     private function roomCallback(button: Button): Void {
         rooms.callAll("kill");
 
-        /*
-        var options: TweenOptions;
-        options = {
-            type: FlxTween.ONESHOT,
-            complete: cast fadeDetective,
-        };
-        // Explanation: linearMotion(object, fromX, fromY, toX, toY,
-        //                           durationOrSpeed, useAsDuration, options)
-        var toX = detectiveRoom.x + detectiveRoom.width - detective.width / 2;
-        var toY = detective.getY();
-        FlxTween.linearMotion(detective, detective.getX(), detective.getY(),
-                              toX, toY, 1.5, true, options);
-        */
         originRoom = detectiveRoom;
         moveDetective();
         detectiveRoom = button;
@@ -271,8 +262,17 @@ class PlayState extends State {
         button.visible = true;
     }
 
-    private function flashbackCallback(button: Button): Void {
+    private function moveCallback(button: Button): Void {
         rooms.callAll("revive");
+
+        if (!dialogBox.alive) {
+            dialogCallback(button);
+            dialogIndex = 12;
+            raiseDialog(textTimer);
+        }
+    }
+
+    private function flashbackCallback(button: Button): Void {
     }
 
     private function createHUD(): Void {
@@ -280,13 +280,15 @@ class PlayState extends State {
 
         dialogBox = new Button(dialogCallback, 400, 523, "dialogBox.png",
                                dialogs[0], 0xffffff, 20);
-        dialogBox.kill();
         add(dialogBox);
         add(dialogBox.text);
 
-        flashback = new Button(flashbackCallback, FlxG.width - 40, 32,
+        flashback = new Button(flashbackCallback, FlxG.width - 80, 32,
                                "flashback.png");
         add(flashback);
+
+        move = new Button(moveCallback, FlxG.width - 40, 32, "move.png");
+        add(move);
     }
 
 	override public function destroy(): Void {
