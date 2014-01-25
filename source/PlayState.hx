@@ -20,8 +20,6 @@ import flixel.tweens.FlxTween.TweenOptions;
 class PlayState extends State {
     private var textTimer: FlxTimer;
     private var background: Sprite;
-    private var leftText: FlxText;
-    private var rightText: FlxText;
 
     // HUD
     private var itemBar: Array<Button>;
@@ -143,17 +141,18 @@ class PlayState extends State {
         detective.setPosition(200, 440);
         woman.setPosition(180, 310);
         man.setPosition(490, 310);
-        victim.setPosition(390, 310);
+        victim.setPosition(390, 316);
 
         detective.animation.add("walking", [0, 1, 2, 3, 4, 5], 10, true);
         woman.animation.add("idle", [0, 1, 2, 3], 10, true);
         man.animation.add("idle", [0, 1, 2, 3, 4, 5], 10, true);
-        victim.animation.add("idle", [0, 1, 2, 3, 4], 10, true);
+        victim.animation.add("dying", [0, 1, 2, 3, 4], 10, true);
+        victim.animation.add("dead", [3], 10, false);
 
         detective.animation.play("walking");
         woman.animation.play("idle");
         man.animation.play("idle");
-        victim.animation.play("idle");
+        victim.animation.play("dead");
 
         add(detective);
         add(woman);
@@ -259,13 +258,6 @@ class PlayState extends State {
     private function createHUD(): Void {
         itemBar = new Array<Button>();
 
-        leftText = new FlxText(10, 10, 200, "Explosions: ", 20);
-        add(leftText);
-
-        rightText = new FlxText(FlxG.width - 280, 10, 170, "=)", 20);
-        rightText.alignment = "right";
-        add(rightText);
-
         dialogBox = new Button(dialogCallback, 400, 523, "dialogBox.png",
                                dialogs[0], 0xffffff, 20);
         dialogBox.kill();
@@ -298,9 +290,6 @@ class PlayState extends State {
         }
         #end
 
-        // HUD
-        leftText.text = "Explosions: ";
-        rightText.text = "=)";
         rooms.setAll("visible", false);
 
 		super.update();
