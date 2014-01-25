@@ -18,16 +18,17 @@ import flixel.tweens.motion.LinearMotion;
 import flixel.tweens.FlxTween.TweenOptions;
 
 class PlayState extends State {
+    private var textTimer: FlxTimer;
     private var background: FlxSprite;
-    private var explosions: FlxGroup;
     private var leftText: FlxText;
     private var rightText: FlxText;
-    private var deepExplosionSound: FlxSound;
 
     // HUD
     private var itemBar: Array<Button>;
-    private var dialogBox: Button;
     private var flashback: Button;
+    private var dialogBox: Button;
+    private var dialogs: Array<String>;
+    private var dialogIndex: Int;
 
     // Clickable itens:
     private var dagger1: Button;
@@ -38,16 +39,12 @@ class PlayState extends State {
     private var rooms: FlxGroup;
 
 	override public function create(): Void {
-        // Load sound
-        deepExplosionSound = new FlxSound();
-        deepExplosionSound.loadEmbedded("assets/sounds/underwater_explosion.ogg");
-
         // Add background
         background = new Sprite(0, 0, "background.png");
         add(background);
 
-        // Setup explosion groups.
-        createExplosions();
+        createRooms();
+        createDialogs();
 
         // Setup the HUD
         createHUD();
@@ -55,11 +52,38 @@ class PlayState extends State {
         // Place all itens on the scene
         createItens();
 
-        createRooms();
-
+        textTimer = FlxTimer.start(0.75, raiseDialog);
+        dialogIndex = 0;
         // Done!!
 		super.create();
 	}
+
+    private function createDialogs(): Void {
+        dialogs = new Array<String>();
+
+        dialogs.push("   This is the crime scene.\n" +
+                     "   You are the detective. But not a regular one.");
+        dialogs.push("   While in a crime scene, you have the power so see" +
+                     "\n   what happend..." );
+        dialogs.push("   ... as you were the criminal.");
+        dialogs.push("");
+    }
+
+    private function raiseDialog(timer: FlxTimer): Void {
+        dialogBox.text.text = dialogs[dialogIndex];
+        dialogBox.revive();
+    }
+
+    // When a dialog box is clicked, it does...
+    private function dialogCallback(button: Button): Void {
+        dialogIndex++;
+        if (dialogs[dialogIndex] == "") {
+            button.kill();
+            dialogIndex++;
+        } else {
+            button.text.text = dialogs[dialogIndex];
+        }
+    }
 
     private function createItens(): Void {
         dagger1 = new Button(moveToBar, 200, 200, "dagger.png");
@@ -102,15 +126,6 @@ class PlayState extends State {
                                       options); 
     }
 
-    // When a dialog box is clicked, it does...
-    private function dialogCallback(button: Button): Void {
-        if (button.text.text == "   Ameba!") {
-            button.kill();
-        } else {
-            button.text.text = "   Ameba!";
-        }
-    }
-
     private function roomCallback(button: Button): Void {
         rooms.callAll("kill");
     }
@@ -123,21 +138,10 @@ class PlayState extends State {
         rooms.callAll("revive");
     }
 
-    private function createExplosions(): Void {
-        explosions = new FlxGroup();
-        for (i in 0...30) {
-            var explosion: Explosion = new Explosion(deepExplosionSound);
-            explosion.kill();
-            explosions.add(explosion);
-        }
-        add(explosions);
-    }
-
     private function createHUD(): Void {
         itemBar = new Array<Button>();
 
-        leftText = new FlxText(10, 10, 200, "Explosions: " +
-                               explosions.countLiving(), 20);
+        leftText = new FlxText(10, 10, 200, "Explosions: ", 20);
         add(leftText);
 
         rightText = new FlxText(FlxG.width - 280, 10, 170, "=)", 20);
@@ -145,9 +149,7 @@ class PlayState extends State {
         add(rightText);
 
         dialogBox = new Button(dialogCallback, 400, 523, "dialogBox.png",
-                               "   Long long text. =)\n" +
-                               "   Second line.",
-                               0xffffff, 20);
+                               dialogs[0], 0xffffff, 20);
         dialogBox.kill();
         add(dialogBox);
         add(dialogBox.text);
@@ -158,6 +160,10 @@ class PlayState extends State {
     }
 
 	override public function destroy(): Void {
+        if (textTimer != null) {
+            textTimer.abort();
+            textTimer = null;
+        }
 		super.destroy();
 	}
 
@@ -165,45 +171,22 @@ class PlayState extends State {
         #if android
         for (touch in FlxG.touches.list) {
             if (touch.justReleased) {
-                createExplosionAt(touch.x, touch.y);
             }
         }
         #end
 
         #if !mobile
         if (FlxG.mouse.justReleased) {
-            createExplosionAt(FlxG.mouse.x, FlxG.mouse.y);
-        }
-
-        if (FlxG.keyboard.justReleased("SPACE")) {
-            //create dialog box.
-            dialogBox.revive();
         }
         #end
 
         // HUD
-        leftText.text = "Explosions: " + explosions.countLiving();
+        leftText.text = "Explosions: ";
         rightText.text = "=)";
         rooms.setAll("visible", false);
 
 		super.update();
 	}
-
-
-    /**
-     * Creates a new explosion sprite
-     */
-    private function createExplosionAt(x: Float, y: Float): Explosion {
-        if (explosions.countDead() > 0) {
-            var explosion: Explosion = cast(explosions.getFirstDead(), Explosion);
-            explosion.setPosition(x, y);
-            explosion.revive();
-            return explosion;
-        }
-        else {
-            return null; // this should never happen...
-        }
-    }
 
     override public function onBackButton(event: KeyboardEvent): Void {
         // Get ESCAPE from keyboard or BACK from android.
