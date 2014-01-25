@@ -36,7 +36,9 @@ class MenuState extends State {
         buttonPlay = new Button(playCallback, 300, 150, "button.png", " Play");
         buttonExit = new Button(exitCallback, 300, 300, "button.png", " Exit");
         add(buttonPlay);
+        add(buttonPlay.text);
         add(buttonExit);
+        add(buttonExit.text);
 
 		super.create();
 	}
@@ -66,11 +68,11 @@ class MenuState extends State {
         }
     }
 
-    private function playCallback(): Void {
+    private function playCallback(button: Button): Void {
         switchState(new PlayState());
     }
 
-    private function exitCallback(): Void {
+    private function exitCallback(button: Button): Void {
         #if !web
         //event.stopImmediatePropagation();
         System.exit(0);
