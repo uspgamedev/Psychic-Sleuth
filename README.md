@@ -78,24 +78,35 @@ Femeale NPC na Cozinha(Sem pistas):
 
 NPC-Ai seu guarda,eu não sei o que aconteceu.Eles acabaram brigando, foi tão horrível!
 
-Detetive: Eu encontrei X,Y,Z , e parece que vocês dois estavam saindo faz um tempo já,não é?
+Escolhendo o culpado
+--------------------
 
-NPC-O MNPC é só meu amigo, meu namorado morre de ciúmes de mim e veio até aqui...
+* FNPC
 
-*Pedir para FNPC segurar o Martelo*
+  Detetive: Eu encontrei X,Y,Z , e parece que vocês dois estavam saindo faz um tempo já,não é?
 
-[FNPC segura o martelo sem saber o que fazer]
+  NPC-O MNPC é só meu amigo, meu namorado morre de ciúmes de mim e veio até aqui...
+  
+  [Detetive acusa ela, ela pede uma prova]
 
-[Entrevista com MNPC no quarto]
+  [Pedir para FNPC segurar o Martelo]
 
-MNPC: Olha, eu não sei o que aconteceu direito, minha amiga veio aqui,e de repente esse cara apareceu, sei lá...
+  [FNPC segura o martelo sem saber o que fazer]
+  
+  [O jogador perde por ter errado!]
+  
+* MNPC
 
-*Detetive pede para MNPC segurar o martelo*
+  [Entrevista com MNPC no quarto]
 
-*MNPC tenta bater no Detetive com Martelo*
+  MNPC: Olha, eu não sei o que aconteceu direito, minha amiga veio aqui,e de repente esse cara apareceu, sei lá...
 
-*Detetive Defende*
+  [Detetive acusa, MNPC pede prova e detetive fala para MNPC segurar o martelo*
 
-*Detetive usa Taser em MNPC *
+  [MNPC tenta bater no Detetive com Martelo]
 
-*Detetive leva MNPC para a Cadeia*
+  [Detetive Defende]
+
+  [Detetive usa Taser em MNPC]
+
+  [Detetive leva MNPC para a Cadeia]
