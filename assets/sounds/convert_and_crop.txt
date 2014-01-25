@@ -1,0 +1,19 @@
+======
+HOW TO
+======
+
+Convert .wav to .ogg
+--------------------
+
+$ oggenc in.wav
+
+It will create in.ogg in the current directory.
+
+
+Crop part of sound file
+----------------------
+
+$ ffmpeg -i in.wav -ss 00:00:00 -t 00:00:04 -acodec copy out.wav
+
+The output file will have the first 4 seconds of the input file.
+

@@ -1,0 +1,18 @@
+=======
+CREDITS
+=======
+
+* Boat explosion
+    - Name: "explosion.ogg"
+    - Original name: "explosion 3.wav"
+    - Author: Dan Oberbauer
+    - Link: http://www.freesound.org/people/DJ%20Chronos/sounds/123236/
+    - License: Creative Commons 3.0 (http://creativecommons.org/licenses/by/3.0)
+
+
+* Submarine explosion
+    - Name: "underwater_explosion.ogg"
+    - Original name: "underwater explosion.wav"
+    - Author: "cubix"
+    - Link: http://www.freesound.org/people/cubix/sounds/124544/
+    - License: Public Domain (http://creativecommons.org/publicdomain/zero/1.0)

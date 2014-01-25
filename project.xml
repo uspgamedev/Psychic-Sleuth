@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+    <!-- Set metadata for your application. The description is ignored on most
+         targets, but is useful for packaging like Chrome Apps or Opera Widgets.
+
+         For compatibility with Android and webOS, the package name must include
+         at least three "sections", and the version should have exactly three
+         "sections". -->
+    <meta description=""
+          package="global.game.jam" version="0.1.0"
+          company="" />
+
+    <!-- Basic program attributes
+         title: String shown in title bar;
+         file: Output file name;
+         main: Main class of the project. -->
+	<app title="GGJ 2014" file="ggj2014" main="Main" />
+
+    <!-- Set an icon for you project (if you have one).
+         If you specify a bitmap icon, you can include multiple icon nodes, each
+         with a different icon size. Otherwise you can specify an SVG file, and
+         the command-line tools will attempt to process the SVG and generate
+         icons for each requested size for the current target. -->
+    <!-- <icon path="icon.svg" /> -->
+    <!-- <icon path="icon.png" size="32" /> -->
+    <!-- <icon path="icon.png" width="64" height="64" /> -->
+
+    <section if="mobile">
+        <!-- Fullscreen when running in android. -->
+        <window width="0" height="0" fps="60"/>
+    </section>
+    <section if="desktop">
+        <!-- Fixed size when running in desktop. -->
+        <window width="800" height="600" fps="60"/>
+        <window hardware="true" allow-shaders="true" require-shaders="true"/>
+        <window vsync="true" antialiasing="4"/>
+    </section>
+	<window orientation="landscape" />
+
+    <!-- Set android api level -->
+    <android target-sdk-version="10" />
+
+    <!-- Path to build folder from where project.xml is placed. -->
+	<set name="BUILD_DIR" value="export" />
+
+    <!-- Path to source folder from where project.xml is placed. -->
+	<classpath name="source" />
+
+    <!-- Set assets folder. These files will be copied (or embedded) in the
+         final project. -->
+    <assets path="assets" />
+
+    <!-- Include classes or extensions to haxelib. -->
+	<haxelib name="openfl" />
+	<haxelib name="flixel"/>
+
+	<!-- Enable right and middle click support for the mouse.
+         Flash player version 11.2+, no HTML5 support -->
+	<!--<haxedef name="FLX_MOUSE_ADVANCED" />-->
+
+	<!-- The swf version should be at least 11.2 if you want to use the
+         FLX_MOUSE_ADVANCED option-->
+	<set name="SWF_VERSION" value="11.2" />
+
+	<!-- Optimise inputs, be careful you will get null errors if you don't use
+         conditionals in your game-->
+	<!--<haxedef name="FLX_NO_GAMEPAD" />-->
+	<haxedef name="FLX_NO_MOUSE" if="mobile" />
+	<haxedef name="FLX_NO_KEYBOARD" if="mobile" />
+	<haxedef name="FLX_NO_TOUCH" if="desktop" />
+
+	<!-- Disable the Flixel core debugger.
+         Automatically gets set whenever you compile in release mode!-->
+	<haxedef name="FLX_NO_DEBUG" unless="debug" />
+</project>
