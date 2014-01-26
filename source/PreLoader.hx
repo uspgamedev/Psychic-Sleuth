@@ -25,7 +25,6 @@ class PreLoader extends State {
         spriteAssets = [
             "background.png",
             "button.png",
-            "explosion.png",
             "dagger.png",
             "dialogBox.png",
             "hammer.png",
@@ -39,6 +38,16 @@ class PreLoader extends State {
             "woman.png",
             "hipster-victim.png",
             "move.png",
+            "booklets.png",
+            "fireplace.png",
+            "key.png",
+            "lamp.png",
+            "marijuana.png",
+            "newspaper.png",
+            "open-door.png",
+            "pc.png",
+            "toilet.png",
+            "toolkit.png",
         ];
         soundAssets = [
             "underwater_explosion.ogg",

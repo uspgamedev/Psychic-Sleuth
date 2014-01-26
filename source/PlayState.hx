@@ -29,10 +29,18 @@ class PlayState extends State {
     private var dialogs: Array<String>;
     private var dialogIndex: Int;
 
-    // Clickable itens:
-    private var dagger1: Button;
-    private var dagger2: Button;
+    // House itens:
     private var hammer: Button;
+    private var booklets: Button;
+    private var fireplace: Sprite;
+    private var key: Button;
+    private var lamp: Button;
+    private var drugs: Button;
+    private var newspaper: Button;
+    private var door: Button;
+    private var pc: Button;
+    private var toilet: Button;
+    private var toolbox: Button;
 
     // Clickable rooms.
     private var rooms: FlxGroup;
@@ -156,12 +164,31 @@ class PlayState extends State {
     }
 
     private function createItens(): Void {
-        dagger1 = new Button(moveToBar, 200, 200, "dagger.png");
-        dagger2 = new Button(moveToBar, 300, 300, "dagger.png");
-        hammer = new Button(moveToBar, 200, 350, "hammer.png");
-        add(dagger1);
-        add(dagger2);
+        hammer    = new Button(moveToBar, 520, 400, "hammer.png");
+        booklets  = new Button(moveToBar, 210, 370, "booklets.png");
+        fireplace = new Sprite(290, 352, "fireplace.png", true, false, 96, 96);
+        fireplace.animation.add("burn", [0, 1, 2, 3], 10, true);
+        fireplace.animation.play("burn");
+        key       = new Button(moveToBar, 240, 300, "key.png");
+        lamp      = new Button(moveToBar, 240, 400, "lamp.png");
+        drugs     = new Button(moveToBar, 240, 100, "marijuana.png");
+        newspaper = new Button(moveToBar, 270, 270, "newspaper.png");
+        door      = new Button(moveToBar, 539, 274, "open-door.png");
+        pc        = new Button(moveToBar, 363, 290, "pc.png");
+        toilet    = new Button(moveToBar, 590, 292, "toilet.png");
+        toolbox   = new Button(moveToBar, 400, 290, "toolkit.png");
+
         add(hammer);
+        add(booklets);
+        add(fireplace);
+        add(key);
+        add(lamp);
+        add(drugs);
+        add(newspaper);
+        add(door);
+        add(pc);
+        add(toilet);
+        add(toolbox);
     }
 
     private function createRooms(): Void {
