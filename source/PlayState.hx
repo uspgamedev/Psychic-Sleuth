@@ -225,7 +225,7 @@ class PlayState extends State {
 
         // Positioning everybody.
         detective.setPosition(200, 440);
-        woman.setPosition(180, 310);
+        woman.setPosition(220, 310);
         man.setPosition(390, 440);
         victim.setPosition(490, 316);
         man.facing = FlxObject.LEFT;

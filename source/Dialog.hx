@@ -35,7 +35,7 @@
     /* 15 */dialogs.push("");
     /* 16 */dialogs.push("Crybaby Lady: Me and Hipster Guy argued about sending Big" +
                          "\n   Guy to rehab. He said it wasn't necessary! Did he not care" +
-                         "\n   about my my husband!?");
+                         "\n   about my husband!?");
     /* 17 */dialogs.push("");
     /* 18 */dialogs.push("Crybaby Lady: You know, I love my husband, but he has a" +
                          "\n   problem with drugs...");
