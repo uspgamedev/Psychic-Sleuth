@@ -1,0 +1,122 @@
+
+The first case
+==============
+
+Intro
+-----
+
+"D": Detective
+"M": Man
+"W": Woman
+"V": The victim
+
+[D]
+It was a windy afternoon, and a few months had passed since my last job. Afraid
+that I could-ve got a little rusty, I picked up an easy-looking one. By the way,
+the name is Bobdude, and I`m a supernatural detective. I try to keep it a secret
+though. I hope I don`t have to use my power in this case.
+
+(Goes into the house)
+
+[D]
+"Hello there. Did anyone call for a private detective?"
+I could hear the sobs of a woman in the distance. I strong
+looking man came from upstairs.
+
+[M]
+"Welcome, I`m Big Guy. My wife, Crybaby Lady, is shocked and won`t leave her room.
+I hope you understand."
+
+[D]
+"Of course".
+Humm. This definetly looks like it is going to be easy.
+"If you excuse me, then, I shal begin right away."
+
+[M]
+"Sure. I will show you to Hipster Guy. He is the victim."
+Said the big man, before leading me to his office.
+
+[D]
+Humm. Trauma to the back of the head. Intense bleeding. Looks like a
+blunt weapon caused this. Which is bad, since a lot of things in a
+house could cause blunt damage. *Finding the murder weapon is crucial.*
+"How did you find him?"
+
+[M]
+"He was like that *when I left the shower*. I looked for Crybaby but she
+seemed as surprised as me. We then decide to call for your services to avoid
+any unnecessary scandals."
+
+[D]
+"I see."
+There is something very fishy about that statement.
+"Is anybody else here?"
+
+[M]
+"No, just my wife and me. We locked the house down until you arrived..."
+
+[D]
+"I see."
+So *either he or his wife must be the culprit*.
+"Mind if I take a look around?"
+
+[M]
+"Not at all."
+He was looking very serious for such a carefree answer.
+
+[D]
+Let`s check this crime scene, and then the other rooms. I must
+click on the objects I find intriguing or suspicious to find evidence.
+Hopefully, those will lead me to the motive. *With both whydunnit and the
+howdunnit, I can uncover the whodunnit*.
+
+Once I`m done here, I just have to click on the *WALK ICON* and move
+to another room.
+
+Scene I: The affair
+------------------
+
+* Office
+
+- Check PC
+
+[D]
+You can find out a lot about people from their PCs. For instance,
+reading these e-mail from Crybaby Lady (which I just hacked) reveals
+to me that she was having an affair with Hipster Guy. But apparently
+they argued about something and should have been on bad terms before
+the murder. I really want to know what she has to say about this.
+(trigger flag AFFAIR)
+
+* Bedroom
+
+- News on the wall
+
+[D]
+Some news about Big Guy building the most awesome treehouse in the
+neighbourhood. He must be really good with tools.
+(trigger flag CARPENTER)
+
+- Talking to Crybaby Lady
+
+<< no flags >>
+
+[W]
+"Sob, sob... How could this happen..."
+
+[D]
+"It will be OK, miss. Could you tell me how it happened?"
+
+[W]
+"I didn`t see any of it.. sob.. I just.. Big Guy came in shouting
+that something happend to Hipster Guy, and then I saw all that blood..."
+She froze there and stared into nowhere.
+
+[D]
+"Lady?"
+
+[W]
+"That's it. I came back here and my husband hugged me. It felt weird,
+because it was both conforting and accusing... Like he pitied me. *With
+everything that I`d done, I did not know how to feel*."
+
