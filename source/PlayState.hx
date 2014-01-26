@@ -8,6 +8,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.util.FlxMath;
+import flixel.util.FlxPoint;
 import flixel.util.FlxTimer;
 import flixel.util.FlxArrayUtil;
 import flixel.group.FlxGroup;
@@ -41,6 +42,7 @@ class PlayState extends State {
     private var pc: Button;
     private var toilet: Button;
     private var toolbox: Button;
+    private var fridge: Button;
 
     // Clickable rooms.
     private var rooms: FlxGroup;
@@ -107,6 +109,7 @@ class PlayState extends State {
 
     private function createItens(): Void {
         hammer    = new Button(moveToBar, 520, 400, "hammer.png");
+        hammer.kill();
         booklets  = new Button(moveToBar, 210, 370, "booklets.png");
         fireplace = new Sprite(290, 352, "fireplace.png", true, false, 96, 96);
         fireplace.animation.add("burn", [0, 1, 2, 3], 10, true);
@@ -121,8 +124,8 @@ class PlayState extends State {
         pc        = new Button(moveToBar, 363, 290, "pc.png");
         toilet    = new Button(moveToBar, 590, 292, "toilet.png");
         toolbox   = new Button(moveToBar, 400, 290, "toolkit.png");
+        fridge    = new Button(endGame, 570, 400, "fridge.png");
 
-        add(hammer);
         add(booklets);
         add(fireplace);
         add(key);
@@ -133,21 +136,23 @@ class PlayState extends State {
         add(pc);
         add(toilet);
         add(toolbox);
+        add(fridge);
+        add(hammer);
     }
 
     private function createRooms(): Void {
         rooms = new FlxGroup();
         rooms.add(new Button(roomCallback, overRoomCallback, 240, 270,
-                             "bright1.png"));
+                             "bright1.png", "bedroom"));
         rooms.add(new Button(roomCallback, overRoomCallback, 430, 270,
-                             "bright1.png"));
+                             "bright1.png", "office"));
         rooms.add(new Button(roomCallback, overRoomCallback, 575, 270,
-                             "bright3.png"));
+                             "bright3.png", "bathroom"));
         detectiveRoom = new Button(roomCallback, overRoomCallback, 304, 383,
-                             "bright4.png");
+                             "bright4.png", "livingroom");
         rooms.add(detectiveRoom);
         rooms.add(new Button(roomCallback, overRoomCallback, 543, 383,
-                             "bright5.png"));
+                             "bright5.png", "kitchen"));
         add(rooms);
         rooms.setAll("visible", false);
         rooms.callAll("kill");
@@ -179,6 +184,7 @@ class PlayState extends State {
 
         shadow.animation.add("idle", [0], 10, false);
         shadow.animation.add("kill", [0, 1, 2, 3, 4, 5], 10, false);
+        shadow.animation.add("throw", [0, 1, 2, 3, 4, 5, 0], 10, false);
         detective.animation.add("idle", [0, 1, 2, 3, 4, 5], 10, true);
         detective.animation.add("walking", [6, 7, 8, 9, 10, 11], 10, true);
         woman.animation.add("idle", [0, 1, 2, 3], 10, true);
@@ -389,13 +395,21 @@ class PlayState extends State {
         }
     }
 
+    private function flashbackCallback(button: Button): Void {
+        if (detectiveRoom.text.text == "office") {
+            sceneInOffice();
+        } else if (detectiveRoom.text.text == "kitchen") {
+            sceneInKitchen();
+        }
+    }
+
     /***
      * Scene:
      * Everybody is hiden. Shadow apears in the offiece, where victim is alive.
      * Shadow goes to victim, attack and victim dies.
      * Shadow fades and everybody reapears.
      */
-    private function flashbackCallback(button: Button): Void {
+    private function sceneInOffice(): Void {
         shadow.revive();
         shadow.alpha = 0;
         shadow.setPosition(360, 305);
@@ -414,9 +428,72 @@ class PlayState extends State {
         victim.animation.play("stand");
     }
 
+    /***
+     * Scene:
+     * Everybody is hiden. Shadow apears in the kitchen.
+     * Shadow attacks. Hammer drops.
+     * Shadow fades and everybody reapears.
+     */
+    private function sceneInKitchen(): Void {
+        shadow.revive();
+        shadow.alpha = 0;
+        shadow.setPosition(465, 430);
+        shadow.animation.play("idle");
+        hammer.setPosition(520, 400);
+
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+            complete: cast shadowDropHammer,
+        };
+        FlxTween.multiVar(shadow, { x: 480, alpha: 1}, 2.0, options);
+
+        detective.kill();
+        woman.kill();
+        man.kill();
+        victim.kill();
+    }
+
     private function shadowAttack(): Void {
         shadow.animation.play("kill");
         timer = FlxTimer.start(0.4, shadowWaits);
+    }
+
+    private function shadowDropHammer(): Void {
+        shadow.animation.play("throw");
+        timer = FlxTimer.start(0.4, hammerFall);
+    }
+
+    private function hammerFall(timer: FlxTimer): Void {
+        hammer.revive();
+
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+            complete: cast hideHammer,
+        };
+        var p1: FlxPoint = new FlxPoint(hammer.getX() + 10, hammer.getY() - 10);
+        var p2: FlxPoint = new FlxPoint(hammer.getX() + 20, hammer.getY());
+        var p3: FlxPoint = new FlxPoint(hammer.getX() + 30, hammer.getY() + 15);
+        var p4: FlxPoint = new FlxPoint(hammer.getX() + 40, hammer.getY() + 30);
+        FlxTween.linearPath(hammer, [p1, p2, p3, p4], 0.6, true, options);
+    }
+
+    private function hideHammer(): Void {
+        shadowFade2(timer);
+
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+            complete: cast killHammer
+        };
+        FlxTween.multiVar(hammer, { alpha: 0}, 2.0, options);
+    }
+
+    private function killHammer(): Void {
+        hammer.alpha = 1;
+        hammer.kill();
+        reviveAll();
     }
 
     private function shadowWaits(timer: FlxTimer): Void {
@@ -431,6 +508,14 @@ class PlayState extends State {
             complete: cast reviveAll,
         };
         FlxTween.multiVar(shadow, { x: 490, alpha: 0}, 0.8, options);
+    }
+
+    private function shadowFade2(timer: FlxTimer): Void {
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+        };
+        FlxTween.multiVar(shadow, { x: 550, alpha: 0}, 0.8, options);
     }
 
     private function reviveAll(): Void {
@@ -457,6 +542,21 @@ class PlayState extends State {
 
         move = new Button(moveCallback, FlxG.width - 40, 32, "move.png");
         add(move);
+    }
+
+    private function endGame(button: Button): Void {
+        hammer.revive();
+        hammer.alpha = 0;
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+            complete: cast accusationScene,
+        };
+        FlxTween.multiVar(hammer, { x: 400, y: 300, alpha: 1, angle: -90}, 2.0, options);
+    }
+
+    private function accusationScene(): Void {
+        switchState(new MenuState());
     }
 
 	override public function destroy(): Void {
