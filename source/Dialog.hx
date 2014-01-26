@@ -120,7 +120,11 @@
         // End game
     /* 58 */dialogs.push("I have found de murder weapon!" +
                          "\n   Now I'm going to show my conclusions.");
-    /* 59 */dialogs.push("");
+    /* 59 */dialogs.push("The murder pretended to be locked in the bathroom by" + 
+                         "\n   locking it from outside and the only one who is" +
+                         "\n   known to use a hammer is Big Guy.");
+    /* 59 */dialogs.push("So he is the cuprit!");
+    /* 57 */dialogs.push("");
         }
 
     }

@@ -80,6 +80,7 @@ class PlayState extends State {
     private var how: Bool = false;
     private var fakeWhy: Bool = false;
     private var finalScene: Bool = false;
+    private var finished: Bool = false;
 
 	override public function create(): Void {
         // Add background
@@ -150,6 +151,9 @@ class PlayState extends State {
             dialogBox.kill();
             dialogIndex++;
             next.kill();
+            if (finished) {
+                switchState(new MenuState());
+            }
         } else {
             dialogBox.changeText("   " + dialogs[dialogIndex]);
         }
@@ -225,7 +229,7 @@ class PlayState extends State {
 
         // Positioning everybody.
         detective.setPosition(200, 440);
-        woman.setPosition(220, 310);
+        woman.setPosition(180, 310);
         man.setPosition(390, 440);
         victim.setPosition(490, 316);
         man.facing = FlxObject.LEFT;
@@ -451,6 +455,9 @@ class PlayState extends State {
     }
 
     private function moveCallback(button: Button): Void {
+        if (next.alive) {
+            return;
+        }
         rooms.callAll("revive");
 
         if (!dialogBox.alive) {
@@ -461,6 +468,9 @@ class PlayState extends State {
     }
 
     private function flashbackCallback(button: Button): Void {
+        if (next.alive) {
+            return;
+        }
         if (detectiveRoom.text.text == "office") {
             sceneInOffice();
         } else if (detectiveRoom.text.text == "kitchen") {
@@ -621,9 +631,9 @@ class PlayState extends State {
         var options: TweenOptions;
         options = {
             type: FlxTween.ONESHOT,
-            complete: cast accusationScene,
         };
-        FlxTween.multiVar(hammer, { x: 0, y: 0, alpha: 1, angle: -90}, 5.0, options);
+        FlxTween.multiVar(hammer, { x: 400, y: 100, alpha: 1, angle: -90}, 5.0, options);
+        finished = true;
     }
 
     private function accusationScene(): Void {
