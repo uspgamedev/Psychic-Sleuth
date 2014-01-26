@@ -4,10 +4,12 @@
         static public function createAll (dialogs: Array<String>) {
 
     /* 00 */dialogs.push("This is the crime scene." +
-                         "\n   You are the detective. But not a regular one."); // 0
-    /* 01 */dialogs.push("While in a crime scene, you have the power so see" +
-                         "\n   what happend in a room..." ); // 1
-    /* 02 */dialogs.push("... as you if you were the criminal."); // 2
+                         "\n   I am a private the detective. But not a regular one."); // 0
+    /* 01 */dialogs.push("While in a crime scene, I have the power to see" +
+                         "\n   what happend in it..." ); // 1
+    /* 02 */dialogs.push("... as you if I were the criminal." +
+                         "\n   The problem is I can't see who the culprit is, exactly" +
+                         "\n   because I see everything through his or her eyes only."); // 2
     /* 03 */dialogs.push(""); // 3
     /* 04 */dialogs.push("The victim is Hipster Guy in the office. The man in the" +
                          "\n   living room is Big Guy, and his wife, Crybaby Lady," +
