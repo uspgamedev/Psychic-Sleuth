@@ -29,6 +29,13 @@ class Button extends Sprite {
         text.alignment = "center";
     }
 
+    public function changeText(str: String) {
+        text.text = str;
+        text.draw();
+        text.x = getX() - text.width / 2;
+        text.y = y + (height - text.height) / 2;
+    }
+
     override public function setPosition(X: Float = 0, Y: Float = 0): Void {
         super.setPosition(X, Y);
         if (text != null) {

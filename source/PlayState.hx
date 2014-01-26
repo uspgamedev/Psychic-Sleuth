@@ -163,7 +163,7 @@ class PlayState extends State {
     }
 
     private function raiseDialog(timer: FlxTimer): Void {
-        dialogBox.text.text = "   " + dialogs[dialogIndex];
+        dialogBox.changeText("   " + dialogs[dialogIndex]);
         dialogBox.revive();
     }
 
@@ -174,7 +174,7 @@ class PlayState extends State {
             dialogBox.kill();
             dialogIndex++;
         } else {
-            dialogBox.text.text = "   " + dialogs[dialogIndex];
+            dialogBox.changeText("   " + dialogs[dialogIndex]);
         }
     }
 
