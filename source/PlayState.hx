@@ -73,6 +73,7 @@ class PlayState extends State {
     private var why: Bool = false;
     private var how: Bool = false;
     private var fakeWhy: Bool = false;
+    private var finalScene: Bool = false;
 
 	override public function create(): Void {
         // Add background
@@ -432,6 +433,7 @@ class PlayState extends State {
             sceneInOffice();
         } else if (detectiveRoom.text.text == "kitchen") {
             sceneInKitchen();
+            finalScene = true;
         }
     }
 
@@ -577,6 +579,9 @@ class PlayState extends State {
     }
 
     private function endGame(button: Button): Void {
+        if (!finalScene) {
+            return;
+        }
         hammer.revive();
         hammer.alpha = 0;
         var options: TweenOptions;
