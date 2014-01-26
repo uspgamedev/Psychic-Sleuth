@@ -5,19 +5,19 @@
 
     /* 00 */dialogs.push("This is the crime scene." +
                          "\n   I am a private the detective. But not a regular one."); // 0
-    /* 01 */dialogs.push("While in a crime scene, I have the power to see" +
-                         "\n   what happend in it..." ); // 1
+    /* 01 */dialogs.push("When Im on the crime scene, I have the power to see" +
+                         "\n   what happend..." ); // 1
     /* 02 */dialogs.push("... as you if I were the criminal." +
                          "\n   The problem is I can't see who the culprit is, exactly" +
                          "\n   because I see everything through his or her eyes only."); // 2
     /* 03 */dialogs.push(""); // 3
-    /* 04 */dialogs.push("The victim is Hipster Guy in the office. The man in the" +
+    /* 04 */dialogs.push("The victim on this case was the Hipster Guy, in the office. The man in the" +
                          "\n   living room is Big Guy, and his wife, Crybaby Lady," +
                          "\n   is in their bedroom. The victim was their friend."); // 4
     /* 05 */dialogs.push(""); // 5
     /* 06 */dialogs.push("Crybaby Lady: (crying) I can't belive what happened."); // 6
     /* 07 */dialogs.push(""); // 7
-    /* 08 */dialogs.push("Big Guy: You are not thinking I've done that, are you?"); // 8
+    /* 08 */dialogs.push("Big Guy: You are not thinking that I could've done that, are you?"); // 8
     /* 09 */dialogs.push(""); // 9
     /* 10 */dialogs.push("Cause of death: trauma to the back of the head by" +
                          "\n   a blunt weapon."); // 10
@@ -46,7 +46,7 @@
     /* 24 */dialogs.push("Big Guy: My hammer? I lent it to a friend.");
     /* 25 */dialogs.push("");
     /* 26 */dialogs.push("Big Guy: Yes, the drugs are mine..." +
-                         "\n   By that has nothing to do with the issue at hand, so" +
+                         "\n   But that has nothing to do with the issue at hand, so" +
                          "\n   shouldn't we focus in the murder?");
     /* 27 */dialogs.push("");
     /* 28 */dialogs.push("Big Guy: I was taking a shower. When I left the bathroom, he" +
