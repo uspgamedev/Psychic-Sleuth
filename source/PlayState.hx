@@ -142,10 +142,11 @@ class PlayState extends State {
         man.setAnchor(man.width / 2, man.height);
         victim.setAnchor(victim.width / 2, victim.height);
 
+        // Positioning everybody.
         detective.setPosition(200, 440);
         woman.setPosition(180, 310);
-        man.setPosition(490, 310);
-        victim.setPosition(390, 316);
+        man.setPosition(390, 440);
+        victim.setPosition(490, 316);
         man.facing = FlxObject.LEFT;
 
         detective.animation.add("idle", [0, 1, 2, 3, 4, 5], 10, true);
@@ -205,7 +206,8 @@ class PlayState extends State {
         // Explanation: linearMotion(object, fromX, fromY, toX, toY,
         //                           durationOrSpeed, useAsDuration, options)
         FlxTween.linearMotion(button, button.getX(), button.getY(),
-                              140 + 40 * itemBar.length, 32, 0.65, true, options);
+                              140 + 40 * itemBar.length, 32, 0.65, true,
+                              options);
     }
 
     private function roomCallback(button: Button): Void {
