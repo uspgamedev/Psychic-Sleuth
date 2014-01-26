@@ -116,6 +116,11 @@
     /* 56 */dialogs.push("Always check out the toilet. Them goodies are always there." +
                          "\n   Aaaaand... Aha! A pack of marijuana! Now whose are these?");
     /* 57 */dialogs.push("");
+
+        // End game
+    /* 58 */dialogs.push("I have found de murder weapon!" +
+                         "\n   Now I'm going to show my conclusions.");
+    /* 59 */dialogs.push("");
         }
 
     }

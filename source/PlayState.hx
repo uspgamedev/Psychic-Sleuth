@@ -39,6 +39,9 @@ class PlayState extends State {
     //private var bgMusic: FlxSound;
     private var bgMusic: SoundPlayback;
 
+    // Dialog nexter
+    private var next: Button;
+
     // House itens:
     private var hammer: Button;
     private var booklets: Button;
@@ -82,6 +85,9 @@ class PlayState extends State {
         // Add background
         background = new Sprite(0, 0, "background.png");
         add(background);
+
+        next = new Button(moveToBar, 400, 300, "invisibleButton.png");
+        add(next);
 
         createDialogs();
         createHUD();
@@ -128,8 +134,11 @@ class PlayState extends State {
     }
 
     private function raiseDialog(timer: FlxTimer): Void {
-        dialogBox.changeText("   " + dialogs[dialogIndex]);
-        dialogBox.revive();
+        if (!next.alive) {
+            next.revive();
+            dialogBox.changeText("   " + dialogs[dialogIndex]);
+            dialogBox.revive();
+        }
     }
 
     // When a dialog box is clicked, it does...
@@ -140,6 +149,7 @@ class PlayState extends State {
         if (dialogs[dialogIndex] == "") {
             dialogBox.kill();
             dialogIndex++;
+            next.kill();
         } else {
             dialogBox.changeText("   " + dialogs[dialogIndex]);
         }
@@ -307,8 +317,13 @@ class PlayState extends State {
             if (button.getY() < 40) {
                 break;
             }
-            if (button == hammer) {
-                //TODO
+            if (button == next) {
+                dialogCallback(button);
+                break;
+            } if (next.alive) {
+                return;
+            } else if (button == dialogBox) {
+                break;
             } else if (button == booklets) {
                 maybeDialogIndex = 51;
                 hasBooklet = true;
@@ -582,7 +597,7 @@ class PlayState extends State {
         add(new FlxText(600, 16, 180, "Actions: ", 20));
         itemBar = new Array<Button>();
 
-        dialogBox = new Button(dialogCallback, 400, 523, "dialogBox.png",
+        dialogBox = new Button(moveToBar, 400, 523, "dialogBox.png",
                                "   " + dialogs[0], 0xffffff, 20);
         add(dialogBox);
         add(dialogBox.text);
@@ -599,6 +614,8 @@ class PlayState extends State {
         if (!finalScene) {
             return;
         }
+        dialogIndex = 57;
+        raiseDialog(timer);
         hammer.revive();
         hammer.alpha = 0;
         var options: TweenOptions;
@@ -606,7 +623,7 @@ class PlayState extends State {
             type: FlxTween.ONESHOT,
             complete: cast accusationScene,
         };
-        FlxTween.multiVar(hammer, { x: 400, y: 300, alpha: 1, angle: -90}, 2.0, options);
+        FlxTween.multiVar(hammer, { x: 0, y: 0, alpha: 1, angle: -90}, 5.0, options);
     }
 
     private function accusationScene(): Void {

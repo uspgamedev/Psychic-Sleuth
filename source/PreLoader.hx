@@ -50,6 +50,7 @@ class PreLoader extends State {
             "toolkit.png",
             "shadow.png",
             "fridge.png",
+            "invisibleButton.png"
         ];
         soundAssets = [
             "underwater_explosion.ogg",
