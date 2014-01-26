@@ -217,10 +217,10 @@ class PlayState extends State {
                 dialogIndex = 16;
                 fakeWhy = true;
                 key.revive();
-            } else if (hasDrugs) {
-                dialogIndex = 18;
             } else if (knownAffair) {
                 dialogIndex = 22;
+            } else if (hasDrugs) {
+                dialogIndex = 18;
             }
             raiseDialog(timer);
         }

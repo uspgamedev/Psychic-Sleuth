@@ -6,14 +6,16 @@
     /* 00 */dialogs.push("This is the crime scene." +
                          "\n   You are the detective. But not a regular one."); // 0
     /* 01 */dialogs.push("While in a crime scene, you have the power so see" +
-                         "\n   what happend..." ); // 1
+                         "\n   what happend in a room..." ); // 1
     /* 02 */dialogs.push("... as you if you were the criminal."); // 2
     /* 03 */dialogs.push(""); // 3
-    /* 04 */dialogs.push("Hum... What a mystery."); // 4
+    /* 04 */dialogs.push("The victim is Hipster Guy in the office. The man in the" +
+                         "\n   living room is Big Guy, and his wife, Crybaby Lady," +
+                         "\n   is in their bedroom. The victim was their friend."); // 4
     /* 05 */dialogs.push(""); // 5
-    /* 06 */dialogs.push("(crying) I can't belive what happened."); // 6
+    /* 06 */dialogs.push("Crybaby Lady: (crying) I can't belive what happened."); // 6
     /* 07 */dialogs.push(""); // 7
-    /* 08 */dialogs.push("You are not thinking I've done that, are you?"); // 8
+    /* 08 */dialogs.push("Big Guy: You are not thinking I've done that, are you?"); // 8
     /* 09 */dialogs.push(""); // 9
     /* 10 */dialogs.push("Cause of death: trauma to the back of the head by" +
                          "\n   a blunt weapon."); // 10
@@ -22,34 +24,35 @@
     /* 13 */dialogs.push(""); //13
 
             // Woman
-    /* 14 */dialogs.push("This is terrible... With all the things I've done..." +
-                         "\n   sob... He even hugged me after seeing the body...");
+    /* 14 */dialogs.push("Crybaby Lady: This is terrible... With all the things I've" +
+                         "\n   done... sob... He even hugged me after seeing the body...");
     /* 15 */dialogs.push("");
-    /* 16 */dialogs.push("Me and Hipster Guy argued about sending Big Guy to rehab." +
-                         "\n   He said it wasn't necessary! Did he not care about my" +
-                         "\n   my husband!?");
+    /* 16 */dialogs.push("Crybaby Lady: Me and Hipster Guy argued about sending Big" +
+                         "\n   Guy to rehab. He said it wasn't necessary! Did he not care" +
+                         "\n   about my my husband!?");
     /* 17 */dialogs.push("");
-    /* 18 */dialogs.push("You know, I love my husband, but he has a problem with" +
-                         "\n   drugs...");
+    /* 18 */dialogs.push("Crybaby Lady: You know, I love my husband, but he has a" +
+                         "\n   problem with drugs...");
     /* 19 */dialogs.push("");
-    /* 20 */dialogs.push("I don't know where this key came from!");
+    /* 20 */dialogs.push("Crybaby Lady: I don't know where this key came from!");
     /* 21 */dialogs.push("");
-    /* 22 */dialogs.push("Yes, we had an affair. Hipster Guy consoled me when my" +
-                         "\n   husband was... altered.");
+    /* 22 */dialogs.push("Crybaby Lady: Yes, we had an affair. Hipster Guy consoled me" +
+                         "\n   whenever my husband was... altered.");
     /* 23 */dialogs.push("");
 
             // Man
-    /* 24 */dialogs.push("My hammer? I lent it to a friend.");
+    /* 24 */dialogs.push("Big Guy: My hammer? I lent it to a friend.");
     /* 25 */dialogs.push("");
-    /* 26 */dialogs.push("Yes, the drugs are mine... By that has nothing to do" +
-                         "\n   with the issue at hand, so shouldn't we focus in the" +
-                         "\n   murder?");
+    /* 26 */dialogs.push("Big Guy: Yes, the drugs are mine..." +
+                         "\n   By that has nothing to do with the issue at hand, so" +
+                         "\n   shouldn't we focus in the murder?");
     /* 27 */dialogs.push("");
-    /* 28 */dialogs.push("I was taking a shower. When I left the bathroom, he was" +
-                         "\n   already laying on the floor. The house was locked with only" +
-                         "\n   my wife and I, until you arrived.");
+    /* 28 */dialogs.push("Big Guy: I was taking a shower. When I left the bathroom, he" +
+                         "\n   was already lying on the floor. The house was locked with" +
+                         "\n   only my wife and I inside, until you arrived.");
     /* 29 */dialogs.push("");
-    /* 30 */dialogs.push("Why the hell was she with the key?! That's very suspecious!");
+    /* 30 */dialogs.push("Big Guy: Why the hell was she with the key?! That's very" +
+                         "\n   suspecious!");
     /* 31 */dialogs.push("");
 
             // Toolbox
