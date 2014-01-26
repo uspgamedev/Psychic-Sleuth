@@ -184,6 +184,7 @@ class PlayState extends State {
         fireplace.animation.add("burn", [0, 1, 2, 3], 10, true);
         fireplace.animation.play("burn");
         key       = new Button(moveToBar, 240, 300, "key.png");
+        key.kill();
         lamp      = new Button(moveToBar, 240, 400, "lamp.png");
         drugs     = new Button(moveToBar, 590, 292, "marijuana.png");
         drugs.kill();
@@ -279,6 +280,7 @@ class PlayState extends State {
             } else if (hasBooklet) {
                 dialogIndex = 16;
                 fakeWhy = true;
+                key.revive();
             } else if (hasDrugs) {
                 dialogIndex = 18;
             } else if (knownAffair) {
