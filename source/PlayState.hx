@@ -274,15 +274,15 @@ class PlayState extends State {
     private function womanCallback(button: Button): Void {
         if (!dialogBox.alive) {
             dialogIndex = 14;
-            if (knownAffair) {
-                dialogIndex = 22;
-            } else if (hasKey) {
+            if (hasKey) {
                 dialogIndex = 20;
-            } else if (hasDrugs) {
-                dialogIndex = 18;
             } else if (hasBooklet) {
                 dialogIndex = 16;
                 fakeWhy = true;
+            } else if (hasDrugs) {
+                dialogIndex = 18;
+            } else if (knownAffair) {
+                dialogIndex = 22;
             }
             raiseDialog(textTimer);
         }
@@ -293,10 +293,10 @@ class PlayState extends State {
             dialogIndex = 28;
             if (hasKey) {
                 dialogIndex = 30;
-            } else if (hasDrugs) {
-                dialogIndex = 26;
             } else if (noHammer) {
                 dialogIndex = 24;
+            } else if (hasDrugs) {
+                dialogIndex = 26;
             }
             raiseDialog(textTimer);
         }
