@@ -52,6 +52,11 @@ class PreLoader extends State {
         ];
         soundAssets = [
             "underwater_explosion.ogg",
+            "archiviment.ogg",
+            "qubodupItemHandling2.wav",
+            "qubodupItemHandling4.wav",
+            "Clic07.mp3.ogg",
+            "button05.mp3.ogg"
         ];
 
         spriteAssetIndex = 0;

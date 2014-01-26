@@ -29,6 +29,12 @@ class PlayState extends State {
     private var dialogs: Array<String>;
     private var dialogIndex: Int;
 
+    // Sounds and musics
+    private var gettoSound: FlxSound;
+    private var checkSound: FlxSound;
+    private var buttonSound: FlxSound;
+    private var talkSound: FlxSound;
+
     // House itens:
     private var hammer: Button;
     private var booklets: Button;
@@ -73,6 +79,7 @@ class PlayState extends State {
 
         createDialogs();
         createHUD();
+        loadSounds();
 
         createRooms();
         createItens();
@@ -83,6 +90,17 @@ class PlayState extends State {
         // Done!!
 		super.create();
 	}
+
+    private function loadSounds(): Void {
+        gettoSound = new FlxSound();
+        gettoSound.loadEmbedded("assets/sounds/qubodupItemHandling2.wav");
+        checkSound = new FlxSound();
+        checkSound.loadEmbedded("assets/sounds/qubodupItemHandling4.wav");
+        buttonSound = new FlxSound();
+        buttonSound.loadEmbedded("assets/sounds/Clic07.mp3.ogg");
+        talkSound = new FlxSound();
+        talkSound.loadEmbedded("assets/sounds/button05.mp3.ogg");
+    }
 
     private function createDialogs(): Void {
         dialogs = new Array<String>();
@@ -96,6 +114,8 @@ class PlayState extends State {
 
     // When a dialog box is clicked, it does...
     private function dialogCallback(button: Button): Void {
+        buttonSound.stop();
+        buttonSound.play();
         dialogIndex++;
         if (dialogs[dialogIndex] == "") {
             dialogBox.kill();
@@ -202,6 +222,8 @@ class PlayState extends State {
     }
 
     private function detectiveCallback(button: Button): Void {
+        talkSound.stop();
+        talkSound.play();
         if (!dialogBox.alive) {
             dialogIndex = 4;
             raiseDialog(timer);
@@ -209,6 +231,8 @@ class PlayState extends State {
     }
 
     private function womanCallback(button: Button): Void {
+        talkSound.stop();
+        talkSound.play();
         if (!dialogBox.alive) {
             dialogIndex = 14;
             if (hasKey) {
@@ -227,6 +251,8 @@ class PlayState extends State {
     }
 
     private function manCallback(button: Button): Void {
+        talkSound.stop();
+        talkSound.play();
         if (!dialogBox.alive) {
             dialogIndex = 28;
             if (hasKey) {
@@ -241,6 +267,8 @@ class PlayState extends State {
     }
 
     private function victimCallback(button: Button): Void {
+        talkSound.stop();
+        talkSound.play();
         if (!dialogBox.alive) {
             dialogIndex = 10;
             raiseDialog(timer);
@@ -318,7 +346,11 @@ class PlayState extends State {
             FlxTween.linearMotion(button, button.getX(), button.getY(),
                                   140 + 40 * itemBar.length, 32, 0.65, true,
                                   options);
+            gettoSound.stop();
+            gettoSound.play();
         } while (false);
+        checkSound.stop();
+        checkSound.play();
         if (maybeDialogIndex >= 0) {
             dialogIndex = maybeDialogIndex;
             raiseDialog(timer);
