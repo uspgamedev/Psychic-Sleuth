@@ -1,0 +1,38 @@
+{
+  "folders":
+  [
+    {
+      "follow_symlinks": true,
+      "path": "source"
+    },
+    {
+      "follow_symlinks": true,
+      "path": "assets"
+    },
+    {
+      "follow_symlinks": true,
+      "name": "Flixel",
+      "path": "/usr/lib/haxe/lib/flixel/3,0,4/"
+    },
+    {
+      "follow_symlinks": true,
+      "name": "Flixel Addons",
+      "path": "/usr/lib/haxe/lib/flixel-addons/1,0,1/"
+    },
+    {
+      "follow_symlinks": true,
+      "name": "Haxe",
+      "path": "/usr/lib/haxe/std"
+    }
+  ],
+  "settings":
+  {
+      // The number of spaces a tab is considered equal to
+      "tab_size": 4,
+      // Set to true to insert spaces when tab is pressed
+      "translate_tabs_to_spaces": true,
+      // Columns in which to display vertical rulers
+      "rulers": [ 80 ]
+  }
+}
+

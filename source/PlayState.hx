@@ -13,8 +13,8 @@ import flixel.util.FlxArrayUtil;
 import flixel.group.FlxGroup;
 import flixel.system.FlxSound;
 
-import flixel.tweens.FlxTween;                                                  
-import flixel.tweens.motion.LinearMotion;                                       
+import flixel.tweens.FlxTween;
+import flixel.tweens.motion.LinearMotion;
 import flixel.tweens.FlxTween.TweenOptions;
 
 class PlayState extends State {
@@ -91,7 +91,7 @@ class PlayState extends State {
                      "\n   You are the detective. But not a regular one."); // 0
 /* 01 */dialogs.push("While in a crime scene, you have the power so see" +
                      "\n   what happend..." ); // 1
-/* 02 */dialogs.push("... as you were the criminal."); // 2
+/* 02 */dialogs.push("... as you if you were the criminal."); // 2
 /* 03 */dialogs.push(""); // 3
 /* 04 */dialogs.push("Hum... What a mystery."); // 4
 /* 05 */dialogs.push(""); // 5
@@ -99,46 +99,58 @@ class PlayState extends State {
 /* 07 */dialogs.push(""); // 7
 /* 08 */dialogs.push("You are not thinking I've done that, are you?"); // 8
 /* 09 */dialogs.push(""); // 9
-/* 10 */dialogs.push("Bleh... I'm DEAD!!!"); // 10
+/* 10 */dialogs.push("Cause of death: trauma to the back of the head by" +
+                     "\n   a blunt weapon."); // 10
 /* 11 */dialogs.push(""); // 11
-/* 12 */dialogs.push("Click on the romm where you wish to go."); //12
+/* 12 */dialogs.push("Click on the room where you wish to go."); //12
 /* 13 */dialogs.push(""); //13
 
         // Woman
-/* 14 */dialogs.push("I'm traumatized and a bit guilty.");
+/* 14 */dialogs.push("This is terrible... With all the things I've done..." +
+                     "\n   sob... He even hugged me after seeing the body...");
 /* 15 */dialogs.push("");
-/* 16 */dialogs.push("I've had a little disaffection with Mr. Hipster.");
+/* 16 */dialogs.push("Me and Hipster Guy argued about sending Big Guy to rehab." +
+                     "\n   He said it wasn't necessary! Did he not care about my" +
+                     "\n   my husband!?");
 /* 17 */dialogs.push("");
-/* 18 */dialogs.push("You know, I love my husband.");
+/* 18 */dialogs.push("You know, I love my husband, but he has a problem with" +
+                     "\n   drugs...");
 /* 19 */dialogs.push("");
 /* 20 */dialogs.push("I don't know where this key came from!");
 /* 21 */dialogs.push("");
-/* 22 */dialogs.push("Yes, we had an affair.");
+/* 22 */dialogs.push("Yes, we had an affair. Hipster Guy consoled me when my" +
+                     "\n   husband was... altered.");
 /* 23 */dialogs.push("");
 
         // Man
-/* 24 */dialogs.push("I lent my hammer.");
+/* 24 */dialogs.push("My hammer? I lent it to a friend.");
 /* 25 */dialogs.push("");
-/* 26 */dialogs.push("Yes, the drugs are mine!");
+/* 26 */dialogs.push("Yes, the drugs are mine... By that has nothing to do" +
+                     "\n   with the issue at hand, so shouldn't we focus in the" +
+                     "\n   murder?");
 /* 27 */dialogs.push("");
-/* 28 */dialogs.push("When I left the bathroom, he was laid on the floor.");
+/* 28 */dialogs.push("I was taking a shower. When I left the bathroom, he was" +
+                     "\n   already laying on the floor. The house was locked with only" +
+                     "\n   my wife and I, until you arrived.");
 /* 29 */dialogs.push("");
-/* 30 */dialogs.push("Why the hell she was with the key?!");
+/* 30 */dialogs.push("Why the hell was she with the key?! That's very suspecious!");
 /* 31 */dialogs.push("");
 
         // Toolbox
-/* 32 */dialogs.push("What a nice toolbox, hun.");
+/* 32 */dialogs.push("What a nice toolbox, hum.");
 /* 33 */dialogs.push("");
-/* 34 */dialogs.push("Well, well. I looks like there is no hammer in this" +
-                     "toolbox. Strange, isn't it?");
+/* 34 */dialogs.push("Well, well. It looks like there is no hammer in this" +
+                     "\n   toolbox. Strange, isn't it?");
 /* 35 */dialogs.push("");
 
         // Door
-/* 36 */dialogs.push("This door is locked.");
+/* 36 */dialogs.push("This door's lock is reachable from both sides. But there is no key.");
 /* 37 */dialogs.push("");
-/* 38 */dialogs.push("Here we go. The door is unlocked now.");
+/* 38 */dialogs.push("Here we go, let's test it. Yup, the missing key is definetly" +
+                     "\n   this one.");
 /* 39 */dialogs.push("");
-/* 40 */dialogs.push("So that key goes here.");
+/* 40 */dialogs.push("This door's lock is reachable from both sides. Hum, the key is" +
+                     "\n   missing, but perhaps... Yup, that key goes here.");
 /* 41 */dialogs.push("");
 
         // Key
@@ -148,17 +160,17 @@ class PlayState extends State {
 /* 45 */dialogs.push("");
 
         // Newspaper
-/* 46 */dialogs.push("There is a picture of Big Guy holding a hammer.");
+/* 46 */dialogs.push("There is a picture of Big Guy holding a hammer in front of a" +
+                     "\n   huge treehouse. Hum, where can I find that hammer?");
 /* 47 */dialogs.push("");
 
         // Hammer
-/* 48 */dialogs.push("This is the muder weapon! Now I can solve the case." +
+/* 48 */dialogs.push("This is the murder weapon! Now I can solve the case." +
                      "\n   The cuprit is...");
 /* 49 */dialogs.push("");
 
         // Lamp
-/* 50 */dialogs.push("Maybe this could have caused the trauma to victim's" +
-                     "head.");
+/* 50 */dialogs.push("Maybe this could have caused the trauma to the victim's head.");
 /* 51 */dialogs.push("");
     }
 
@@ -212,7 +224,7 @@ class PlayState extends State {
         rooms = new FlxGroup();
         rooms.add(new Button(roomCallback, overRoomCallback, 240, 270,
                              "bright1.png"));
-        rooms.add(new Button(roomCallback, overRoomCallback, 430, 270, 
+        rooms.add(new Button(roomCallback, overRoomCallback, 430, 270,
                              "bright1.png"));
         rooms.add(new Button(roomCallback, overRoomCallback, 575, 270,
                              "bright3.png"));
