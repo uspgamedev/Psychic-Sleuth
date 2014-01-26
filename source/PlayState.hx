@@ -295,6 +295,10 @@ class PlayState extends State {
 
     // Move an item to itemBar.
     private function moveToBar(button: Button): Void {
+        // If it is already on the bar, do nothing.
+        if (button.getY() < 40) {
+            return;
+        }
         itemBar.push(button);
 
         var options: TweenOptions;
