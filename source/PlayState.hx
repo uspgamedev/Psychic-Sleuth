@@ -74,8 +74,8 @@ class PlayState extends State {
         createHUD();
 
         createRooms();
-        createCharacters();
         createItens();
+        createCharacters();
 
         textTimer = FlxTimer.start(0.75, raiseDialog);
         dialogIndex = 0;
