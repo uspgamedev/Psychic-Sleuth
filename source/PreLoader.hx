@@ -57,7 +57,8 @@ class PreLoader extends State {
             "qubodupItemHandling2.wav",
             "qubodupItemHandling4.wav",
             "Clic07.mp3.ogg",
-            "button05.mp3.ogg"
+            "button05.mp3.ogg",
+            "start_game.ogg"
         ];
 
         spriteAssetIndex = 0;

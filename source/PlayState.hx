@@ -11,6 +11,7 @@ import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
 import flixel.util.FlxTimer;
 import flixel.util.FlxArrayUtil;
+import flixel.util.FlxSoundUtil;
 import flixel.group.FlxGroup;
 import flixel.system.FlxSound;
 
@@ -35,6 +36,8 @@ class PlayState extends State {
     private var checkSound: FlxSound;
     private var buttonSound: FlxSound;
     private var talkSound: FlxSound;
+    //private var bgMusic: FlxSound;
+    private var bgMusic: SoundPlayback;
 
     // House itens:
     private var hammer: Button;
@@ -90,11 +93,18 @@ class PlayState extends State {
 
         timer = FlxTimer.start(0.75, raiseDialog);
         dialogIndex = 0;
+
+        bgMusic.play();
+        //playbackBG();
+
         // Done!!
 		super.create();
 	}
 
     private function loadSounds(): Void {
+        //bgMusic = new FlxSound();
+        //bgMusic.loadEmbedded("assets/sounds/start_game.ogg", true, false, playbackBG);
+        bgMusic = new SoundPlayback("assets/sounds/start_game.ogg", 12.0);
         gettoSound = new FlxSound();
         gettoSound.loadEmbedded("assets/sounds/qubodupItemHandling2.wav");
         checkSound = new FlxSound();
@@ -103,6 +113,13 @@ class PlayState extends State {
         buttonSound.loadEmbedded("assets/sounds/Clic07.mp3.ogg");
         talkSound = new FlxSound();
         talkSound.loadEmbedded("assets/sounds/button05.mp3.ogg");
+    }
+
+    private function playbackBG(): Void {
+        //bgMusic.stop();
+        //bgMusic.play();
+        FlxG.sound.play("start_game.ogg", 1, true, true, playbackBG);
+        //FlxSoundUtil.playWithCallback("assets/sounds/start_game.ogg", playbackBG);
     }
 
     private function createDialogs(): Void {
@@ -232,7 +249,7 @@ class PlayState extends State {
         talkSound.stop();
         talkSound.play();
         if (!dialogBox.alive) {
-            dialogIndex = 4;
+            dialogIndex = 7;
             raiseDialog(timer);
         }
     }
@@ -241,17 +258,17 @@ class PlayState extends State {
         talkSound.stop();
         talkSound.play();
         if (!dialogBox.alive) {
-            dialogIndex = 14;
+            dialogIndex = 13;
             if (hasKey) {
-                dialogIndex = 20;
+                dialogIndex = 19;
             } else if (hasBooklet) {
-                dialogIndex = 16;
+                dialogIndex = 15;
                 fakeWhy = true;
                 key.revive();
             } else if (knownAffair) {
-                dialogIndex = 22;
+                dialogIndex = 21;
             } else if (hasDrugs) {
-                dialogIndex = 18;
+                dialogIndex = 17;
             }
             raiseDialog(timer);
         }
@@ -261,13 +278,13 @@ class PlayState extends State {
         talkSound.stop();
         talkSound.play();
         if (!dialogBox.alive) {
-            dialogIndex = 28;
+            dialogIndex = 27;
             if (hasKey) {
-                dialogIndex = 30;
+                dialogIndex = 29;
             } else if (noHammer) {
-                dialogIndex = 24;
+                dialogIndex = 23;
             } else if (hasDrugs) {
-                dialogIndex = 26;
+                dialogIndex = 25;
             }
             raiseDialog(timer);
         }
@@ -277,7 +294,7 @@ class PlayState extends State {
         talkSound.stop();
         talkSound.play();
         if (!dialogBox.alive) {
-            dialogIndex = 10;
+            dialogIndex = 9;
             raiseDialog(timer);
         }
     }
@@ -293,53 +310,53 @@ class PlayState extends State {
             if (button == hammer) {
                 //TODO
             } else if (button == booklets) {
-                maybeDialogIndex = 52;
+                maybeDialogIndex = 51;
                 hasBooklet = true;
             } else if (button == key) {
                 hasKey = true;
                 if (noKeyInBathroom) {
-                    maybeDialogIndex = 42;
+                    maybeDialogIndex = 41;
                     how = true;
                 } else {
-                    maybeDialogIndex = 44;
+                    maybeDialogIndex = 43;
                 }
             } else if (button == lamp) {
-                maybeDialogIndex = 50;
+                maybeDialogIndex = 49;
                 break;
             } else if (button == door) {
                 if (!noKeyInBathroom && hasKey) {
-                    maybeDialogIndex = 40;
+                    maybeDialogIndex = 39;
                     how = true;
                     break;
                 }
                 noKeyInBathroom = true;
-                maybeDialogIndex = 36;
+                maybeDialogIndex = 35;
                 if (hasKey) {
-                    maybeDialogIndex = 38;
+                    maybeDialogIndex = 37;
                     how = true;
                 }
                 break;
             } else if (button == pc) {
-                maybeDialogIndex = 54;
+                maybeDialogIndex = 53;
                 knownAffair = true;
                 why = true;
                 break;
             } else if (button == toilet) {
-                maybeDialogIndex = 56;
+                maybeDialogIndex = 55;
                 drugs.revive();
                 hasDrugs = true;
                 button = drugs;
             } else if (button == toolbox) {
                 if (carpinter) {
-                    maybeDialogIndex = 34;
+                    maybeDialogIndex = 33;
                     noHammer = true;
                 } else {
-                    maybeDialogIndex = 32;
+                    maybeDialogIndex = 31;
                 }
                 break;
             } else if (button == newspaper) {
                 carpinter = true;
-                maybeDialogIndex = 46;
+                maybeDialogIndex = 45;
                 break;
             }
             itemBar.push(button);
@@ -423,7 +440,7 @@ class PlayState extends State {
 
         if (!dialogBox.alive) {
             dialogCallback(button);
-            dialogIndex = 12;
+            dialogIndex = 11;
             raiseDialog(timer);
         }
     }
