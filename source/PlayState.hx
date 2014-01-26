@@ -145,6 +145,20 @@ class PlayState extends State {
 /* 43 */dialogs.push("");
 /* 44 */dialogs.push("Let's find out where I can use it.");
 /* 45 */dialogs.push("");
+
+        // Newspaper
+/* 46 */dialogs.push("There is a picture of Big Guy holding a hammer.");
+/* 47 */dialogs.push("");
+
+        // Hammer
+/* 48 */dialogs.push("This is the muder weapon! Now I can solve the case." +
+                     "\n   The cuprit is...");
+/* 49 */dialogs.push("");
+
+        // Lamp
+/* 50 */dialogs.push("Maybe this could have caused the trauma to victim's" +
+                     "head.");
+/* 51 */dialogs.push("");
     }
 
     private function raiseDialog(timer: FlxTimer): Void {
@@ -171,7 +185,8 @@ class PlayState extends State {
         fireplace.animation.play("burn");
         key       = new Button(moveToBar, 240, 300, "key.png");
         lamp      = new Button(moveToBar, 240, 400, "lamp.png");
-        drugs     = new Button(moveToBar, 240, 100, "marijuana.png");
+        drugs     = new Button(moveToBar, 590, 292, "marijuana.png");
+        drugs.kill();
         newspaper = new Button(moveToBar, 270, 270, "newspaper.png");
         door      = new Button(moveToBar, 539, 274, "open-door.png");
         pc        = new Button(moveToBar, 363, 290, "pc.png");
@@ -267,6 +282,7 @@ class PlayState extends State {
                 dialogIndex = 18;
             } else if (hasBooklet) {
                 dialogIndex = 16;
+                fakeWhy = true;
             }
             raiseDialog(textTimer);
         }
@@ -297,6 +313,42 @@ class PlayState extends State {
     private function moveToBar(button: Button): Void {
         // If it is already on the bar, do nothing.
         if (button.getY() < 40) {
+            return;
+        }
+        if (button == hammer) {
+            //TODO
+        } else if (button == booklets) {
+            hasBooklet = true;
+        } else if (button == key) {
+            hasKey = true;
+            if (noKeyInBathroom) {
+                how = true;
+            }
+        } else if (button == lamp) {
+            dialogIndex = 50;
+            raiseDialog(textTimer);
+            return;
+        } else if (button == door) {
+            noKeyInBathroom = true;
+            if (hasKey) {
+                how = true;
+            }
+            return;
+        } else if (button == pc) {
+            knownAffair = true;
+            why = true;
+            return;
+        } else if (button == toilet) {
+            drugs.revive();
+            hasDrugs = true;
+            button = drugs;
+        } else if (button == toolbox) {
+            noHammer = true;
+            return;
+        } else if (button == newspaper) {
+            carpinter = true;
+            dialogIndex = 46;
+            raiseDialog(textTimer);
             return;
         }
         itemBar.push(button);
@@ -346,7 +398,7 @@ class PlayState extends State {
 
     private function stopDetective(): Void {
         detective.setPosition(detectiveRoom.x,
-                              detectiveRoom.y + detectiveRoom.height - 8);
+                              detectiveRoom.y + detectiveRoom.height - 4);
         var options: TweenOptions;
         options = {
             type: FlxTween.ONESHOT,
