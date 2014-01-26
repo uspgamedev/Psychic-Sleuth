@@ -10,11 +10,13 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxRandom;
+import flixel.system.FlxSound;
 
 class MenuState extends State {
     private var buttonPlay: Button;
     private var buttonExit: Button;
     private var background: Sprite;
+    private var confirmSound: FlxSound;
 
 	override public function create(): Void {
         Lib.trace("MenuState: update: create");
@@ -27,6 +29,9 @@ class MenuState extends State {
                                 0x000000);
         buttonExit = new Button(exitCallback, 400, 430, "button.png", " Exit",
                                 0x000000);
+
+        confirmSound = new FlxSound();
+        confirmSound.loadEmbedded("assets/sounds/archiviment.ogg");
 
         add(buttonPlay);
         add(buttonPlay.text);
@@ -62,6 +67,8 @@ class MenuState extends State {
     }
 
     private function playCallback(button: Button): Void {
+        confirmSound.stop();
+        confirmSound.play();
         switchState(new PlayState());
     }
 
