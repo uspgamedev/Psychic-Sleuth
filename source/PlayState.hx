@@ -18,7 +18,7 @@ import flixel.tweens.motion.LinearMotion;
 import flixel.tweens.FlxTween.TweenOptions;
 
 class PlayState extends State {
-    private var textTimer: FlxTimer;
+    private var timer: FlxTimer;
     private var background: Sprite;
 
     // HUD
@@ -46,6 +46,7 @@ class PlayState extends State {
     private var rooms: FlxGroup;
 
     // Characteres.
+    private var shadow: Sprite;
     private var detective: Button;
     private var woman: Button;
     private var man: Button;
@@ -77,7 +78,7 @@ class PlayState extends State {
         createItens();
         createCharacters();
 
-        textTimer = FlxTimer.start(0.75, raiseDialog);
+        timer = FlxTimer.start(0.75, raiseDialog);
         dialogIndex = 0;
         // Done!!
 		super.create();
@@ -225,6 +226,7 @@ class PlayState extends State {
     }
 
     private function createCharacters(): Void {
+        shadow = new Sprite(100, 100, "shadow.png", true, true, 32, 64);
         detective = new Button(detectiveCallback, 100, 100, "detective.png",
                                "", 0xffffff, 30, true, true, 32, 64);
         woman = new Button(womanCallback, 200, 100, "woman.png",
@@ -234,6 +236,7 @@ class PlayState extends State {
         victim = new Button(victimCallback, 400, 100, "hipster-victim.png",
                             "", 0xffffff, 30, true, true, 32, 64);
 
+        shadow.setAnchor(shadow.width / 2, shadow.height);
         detective.setAnchor(detective.width / 2, detective.height);
         woman.setAnchor(woman.width / 2, woman.height);
         man.setAnchor(man.width / 2, man.height);
@@ -246,18 +249,24 @@ class PlayState extends State {
         victim.setPosition(490, 316);
         man.facing = FlxObject.LEFT;
 
+        shadow.animation.add("idle", [0], 10, false);
+        shadow.animation.add("kill", [0, 1, 2, 3, 4, 5], 10, false);
         detective.animation.add("idle", [0, 1, 2, 3, 4, 5], 10, true);
         detective.animation.add("walking", [6, 7, 8, 9, 10, 11], 10, true);
         woman.animation.add("idle", [0, 1, 2, 3], 10, true);
         man.animation.add("idle", [0, 1, 2, 3, 4, 5], 10, true);
-        victim.animation.add("dying", [0, 1, 2, 3, 4], 10, true);
+        victim.animation.add("stand", [0], 10, false);
+        victim.animation.add("dying", [0, 1, 2, 3, 4, 3], 10, false);
         victim.animation.add("dead", [3], 10, false);
 
+        shadow.animation.play("idle");
+        shadow.kill();
         detective.animation.play("idle");
         woman.animation.play("idle");
         man.animation.play("idle");
         victim.animation.play("dead");
 
+        add(shadow);
         add(detective);
         add(woman);
         add(man);
@@ -267,7 +276,7 @@ class PlayState extends State {
     private function detectiveCallback(button: Button): Void {
         if (!dialogBox.alive) {
             dialogIndex = 4;
-            raiseDialog(textTimer);
+            raiseDialog(timer);
         }
     }
 
@@ -284,7 +293,7 @@ class PlayState extends State {
                 dialogIndex = 16;
                 fakeWhy = true;
             }
-            raiseDialog(textTimer);
+            raiseDialog(timer);
         }
     }
 
@@ -298,14 +307,14 @@ class PlayState extends State {
             } else if (noHammer) {
                 dialogIndex = 24;
             }
-            raiseDialog(textTimer);
+            raiseDialog(timer);
         }
     }
 
     private function victimCallback(button: Button): Void {
         if (!dialogBox.alive) {
             dialogIndex = 10;
-            raiseDialog(textTimer);
+            raiseDialog(timer);
         }
     }
 
@@ -326,7 +335,7 @@ class PlayState extends State {
             }
         } else if (button == lamp) {
             dialogIndex = 50;
-            raiseDialog(textTimer);
+            raiseDialog(timer);
             return;
         } else if (button == door) {
             noKeyInBathroom = true;
@@ -348,7 +357,7 @@ class PlayState extends State {
         } else if (button == newspaper) {
             carpinter = true;
             dialogIndex = 46;
-            raiseDialog(textTimer);
+            raiseDialog(timer);
             return;
         }
         itemBar.push(button);
@@ -424,11 +433,60 @@ class PlayState extends State {
         if (!dialogBox.alive) {
             dialogCallback(button);
             dialogIndex = 12;
-            raiseDialog(textTimer);
+            raiseDialog(timer);
         }
     }
 
+    /***
+     * Scene:
+     * Everybody is hiden. Shadow apears in the offiece, where victim is alive.
+     * Shadow goes to victim, attack and victim dies.
+     * Shadow fades and everybody reapears.
+     */
     private function flashbackCallback(button: Button): Void {
+        shadow.revive();
+        shadow.alpha = 0;
+        shadow.setPosition(360, 305);
+        shadow.animation.play("idle");
+
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+            complete: cast shadowAttack,
+        };
+        FlxTween.multiVar(shadow, { x: 450, alpha: 1}, 2.0, options);
+
+        detective.kill();
+        woman.kill();
+        man.kill();
+        victim.animation.play("stand");
+    }
+
+    private function shadowAttack(): Void {
+        shadow.animation.play("kill");
+        timer = FlxTimer.start(0.4, shadowWaits);
+    }
+
+    private function shadowWaits(timer: FlxTimer): Void {
+        timer = FlxTimer.start(1, shadowFade);
+        victim.animation.play("dying");
+    }
+
+    private function shadowFade(timer: FlxTimer): Void {
+        var options: TweenOptions;
+        options = {
+            type: FlxTween.ONESHOT,
+            complete: cast reviveAll,
+        };
+        FlxTween.multiVar(shadow, { x: 490, alpha: 0}, 0.8, options);
+    }
+
+    private function reviveAll(): Void {
+        shadow.kill();
+        detective.revive();
+        woman.revive();
+        man.revive();
+        victim.animation.play("dead");
     }
 
     private function createHUD(): Void {
@@ -450,9 +508,9 @@ class PlayState extends State {
     }
 
 	override public function destroy(): Void {
-        if (textTimer != null) {
-            textTimer.abort();
-            textTimer = null;
+        if (timer != null) {
+            timer.abort();
+            timer = null;
         }
 		super.destroy();
 	}
