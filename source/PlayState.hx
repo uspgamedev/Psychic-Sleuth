@@ -45,6 +45,18 @@ class PlayState extends State {
     private var originRoom: Button;
     private var detectiveRoom: Button; // Reference to the room where detective is.
 
+    // Flags
+    private var hasBooklet: Bool = false;
+    private var hasDrugs: Bool = false;
+    private var hasKey: Bool = false;
+    private var knownAffair: Bool = false;
+    private var noHammer: Bool = false;
+    private var carpinter: Bool = false;
+    private var noKeyInBathroom: Bool = false;
+    private var why: Bool = false;
+    private var how: Bool = false;
+    private var fakeWhy: Bool = false;
+
 	override public function create(): Void {
         // Add background
         background = new Sprite(0, 0, "background.png");
@@ -66,26 +78,69 @@ class PlayState extends State {
     private function createDialogs(): Void {
         dialogs = new Array<String>();
 
-        dialogs.push("   This is the crime scene.\n" +
-                     "   You are the detective. But not a regular one."); // 0
-        dialogs.push("   While in a crime scene, you have the power so see" +
+/* 00 */dialogs.push("This is the crime scene." +
+                     "\n   You are the detective. But not a regular one."); // 0
+/* 01 */dialogs.push("While in a crime scene, you have the power so see" +
                      "\n   what happend..." ); // 1
-        dialogs.push("   ... as you were the criminal."); // 2
-        dialogs.push(""); // 3
-        dialogs.push("   Hum... What a mystery."); // 4
-        dialogs.push(""); // 5
-        dialogs.push("   (crying) I can't belive what happened."); // 6
-        dialogs.push(""); // 7
-        dialogs.push("   You are not thinking I've done that, are you?"); // 8
-        dialogs.push(""); // 9
-        dialogs.push("   Bleh... I'm DEAD!!!"); // 10
-        dialogs.push(""); // 11
-        dialogs.push("   Click on the romm where you wish to go."); //12
-        dialogs.push(""); //13
+/* 02 */dialogs.push("... as you were the criminal."); // 2
+/* 03 */dialogs.push(""); // 3
+/* 04 */dialogs.push("Hum... What a mystery."); // 4
+/* 05 */dialogs.push(""); // 5
+/* 06 */dialogs.push("(crying) I can't belive what happened."); // 6
+/* 07 */dialogs.push(""); // 7
+/* 08 */dialogs.push("You are not thinking I've done that, are you?"); // 8
+/* 09 */dialogs.push(""); // 9
+/* 10 */dialogs.push("Bleh... I'm DEAD!!!"); // 10
+/* 11 */dialogs.push(""); // 11
+/* 12 */dialogs.push("Click on the romm where you wish to go."); //12
+/* 13 */dialogs.push(""); //13
+
+        // Woman
+/* 14 */dialogs.push("I'm traumatized and a bit guilty.");
+/* 15 */dialogs.push("");
+/* 16 */dialogs.push("I've had a little disaffection with Mr. Hipster.");
+/* 17 */dialogs.push("");
+/* 18 */dialogs.push("You know, I love my husband.");
+/* 19 */dialogs.push("");
+/* 20 */dialogs.push("I don't know where this key came from!");
+/* 21 */dialogs.push("");
+/* 22 */dialogs.push("Yes, we had an affair.");
+/* 23 */dialogs.push("");
+
+        // Man
+/* 24 */dialogs.push("I lent my hammer.");
+/* 25 */dialogs.push("");
+/* 26 */dialogs.push("Yes, the drugs are mine!");
+/* 27 */dialogs.push("");
+/* 28 */dialogs.push("When I left the bathroom, he was laid on the floor.");
+/* 29 */dialogs.push("");
+/* 30 */dialogs.push("Why the hell she was with the key?!");
+/* 31 */dialogs.push("");
+
+        // Toolbox
+/* 32 */dialogs.push("What a nice toolbox, hun.");
+/* 33 */dialogs.push("");
+/* 34 */dialogs.push("Well, well. I looks like there is no hammer in this" +
+                     "toolbox. Strange, isn't it?");
+/* 35 */dialogs.push("");
+
+        // Door
+/* 36 */dialogs.push("This door is locked.");
+/* 37 */dialogs.push("");
+/* 38 */dialogs.push("Here we go. The door is unlocked now.");
+/* 39 */dialogs.push("");
+/* 40 */dialogs.push("So that key goes here.");
+/* 41 */dialogs.push("");
+
+        // Key
+/* 42 */dialogs.push("Hum... This must open that door.");
+/* 43 */dialogs.push("");
+/* 44 */dialogs.push("Let's find out where I can use it.");
+/* 45 */dialogs.push("");
     }
 
     private function raiseDialog(timer: FlxTimer): Void {
-        dialogBox.text.text = dialogs[dialogIndex];
+        dialogBox.text.text = "   " + dialogs[dialogIndex];
         dialogBox.revive();
     }
 
@@ -96,7 +151,7 @@ class PlayState extends State {
             dialogBox.kill();
             dialogIndex++;
         } else {
-            dialogBox.text.text = dialogs[dialogIndex];
+            dialogBox.text.text = "   " + dialogs[dialogIndex];
         }
     }
 
@@ -176,14 +231,30 @@ class PlayState extends State {
 
     private function womanCallback(button: Button): Void {
         if (!dialogBox.alive) {
-            dialogIndex = 6;
+            dialogIndex = 14;
+            if (knownAffair) {
+                dialogIndex = 22;
+            } else if (hasKey) {
+                dialogIndex = 20;
+            } else if (hasDrugs) {
+                dialogIndex = 18;
+            } else if (hasBooklet) {
+                dialogIndex = 16;
+            }
             raiseDialog(textTimer);
         }
     }
 
     private function manCallback(button: Button): Void {
         if (!dialogBox.alive) {
-            dialogIndex = 8;
+            dialogIndex = 28;
+            if (hasKey) {
+                dialogIndex = 30;
+            } else if (hasDrugs) {
+                dialogIndex = 26;
+            } else if (noHammer) {
+                dialogIndex = 24;
+            }
             raiseDialog(textTimer);
         }
     }
@@ -283,7 +354,7 @@ class PlayState extends State {
         itemBar = new Array<Button>();
 
         dialogBox = new Button(dialogCallback, 400, 523, "dialogBox.png",
-                               dialogs[0], 0xffffff, 20);
+                               "   " + dialogs[0], 0xffffff, 20);
         add(dialogBox);
         add(dialogBox.text);
 
